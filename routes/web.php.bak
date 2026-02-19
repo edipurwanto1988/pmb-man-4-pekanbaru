@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LandingPageController;
+use App\Http\Controllers\Admin\SyaratDaftarUlangController;
+use App\Http\Controllers\RoleController;
+
+// Public
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Auth (Breeze)
+require __DIR__.'/auth.php';
+
+// Admin
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Landing Page Builder
+    Route::resource('landing-page', LandingPageController::class);
+    Route::post('landing-page/reorder', [LandingPageController::class, 'reorder'])->name('landing-page.reorder');
+    Route::post('landing-page/toggle/{id}', [LandingPageController::class, 'toggle'])->name('landing-page.toggle');
+    
+    // Syarat & Berkas
+    Route::resource('syarat', SyaratDaftarUlangController::class);
+    
+    // Role Management
+    Route::resource('roles', RoleController::class);
+});
