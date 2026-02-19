@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# phpMyAdmin local tool
+/phpmyadmin
+run_phpmyadmin.sh
