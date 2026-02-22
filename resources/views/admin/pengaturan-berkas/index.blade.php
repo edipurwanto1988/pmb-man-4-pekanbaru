@@ -7,6 +7,13 @@
         </div>
     </x-slot>
 
+    <style>
+        .shadow-sm input,
+        .shadow-sm select {
+            padding: 10px;
+        }
+    </style>
+
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
@@ -52,7 +59,6 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Label / Nama Berkas</label>
                                     <input type="text" name="label" value="{{ $item->label }}"
-                                           style="padding:10px;"
                                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm"
                                            required>
                                 </div>
@@ -61,14 +67,13 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Urutan Tampil</label>
                                     <input type="number" name="urutan" value="{{ $item->urutan }}" min="0"
-                                           style="padding:10px;"
                                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                 </div>
 
                                 {{-- Wajib --}}
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jenis</label>
-                                    <select name="wajib" style="padding:10px;" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                    <select name="wajib" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                         <option value="1" {{ $item->wajib ? 'selected' : '' }}>⭐ Wajib</option>
                                         <option value="0" {{ !$item->wajib ? 'selected' : '' }}>📎 Opsional</option>
                                     </select>
@@ -77,7 +82,7 @@
                                 {{-- Aktif --}}
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
-                                    <select name="aktif" style="padding:10px;" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                    <select name="aktif" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                         <option value="1" {{ $item->aktif ? 'selected' : '' }}>✅ Aktif (tampil ke siswa)</option>
                                         <option value="0" {{ !$item->aktif ? 'selected' : '' }}>🚫 Nonaktif (sembunyikan)</option>
                                     </select>
