@@ -48,15 +48,15 @@
                                     </button>
                                     
                                     <!-- Edit -->
-                                    <a href="{{ route('admin.landing-page.edit', $section->id) }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors" title="Edit">
-                                        <i class="ri-edit-line"></i>
+                                    <a href="{{ route('admin.landing-page.edit', $section->id) }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900 dark:text-amber-200 dark:hover:bg-amber-800 transition-colors" title="Edit">
+                                        <i class="ri-edit-line"></i> Edit
                                     </a>
                                     
                                     <!-- Delete -->
                                     <form action="{{ route('admin.landing-page.destroy', $section->id) }}" method="POST" onsubmit="return confirm('Delete this section?');">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 hover:bg-red-200 transition-colors" title="Hapus">
-                                            <i class="ri-delete-bin-line"></i>
+                                        <button type="submit" class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:hover:bg-red-800 transition-colors" title="Hapus">
+                                            <i class="ri-delete-bin-line"></i> Hapus
                                         </button>
                                     </form>
                                 </div>

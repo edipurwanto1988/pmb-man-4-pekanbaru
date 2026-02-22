@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Edit Jadwal</h2>
-            <a href="{{ route('admin.jadwal.index') }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">← Kembali</a>
+            <a href="{{ route('admin.jadwal.index') }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"><i class="ri-arrow-left-line"></i> Kembali</a>
         </div>
     </x-slot>
 
@@ -41,8 +41,11 @@
                         <input type="checkbox" name="aktif" value="1" id="aktif" {{ $jadwal->aktif ? 'checked' : '' }} class="rounded border-gray-300 dark:border-gray-600 text-indigo-600">
                         <label for="aktif" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Aktif</label>
                     </div>
-                    <div class="flex justify-end">
-                        <x-primary-button>Update Jadwal</x-primary-button>
+                    <div class="flex justify-between items-center">
+                        <a href="{{ route('admin.jadwal.index') }}" class="inline-flex items-center gap-1 px-3 py-2 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <i class="ri-close-line"></i> Batal
+                        </a>
+                        <x-primary-button><i class="ri-save-line mr-1"></i> Update Jadwal</x-primary-button>
                     </div>
                 </form>
             </div>

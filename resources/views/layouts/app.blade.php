@@ -35,6 +35,21 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <!-- Footer Admin -->
+            <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <img src="{{ asset('logo_man.png') }}" class="h-6 w-6" alt="Logo MAN 4">
+                            <span class="text-sm font-semibold text-green-700 dark:text-green-400">PNBM MAN 4 Kota Pekanbaru</span>
+                        </div>
+                        <span class="text-xs text-gray-400 dark:text-gray-500">
+                            © 2026 MAN 4 Kota Pekanbaru. All Rights Reserved.
+                        </span>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
