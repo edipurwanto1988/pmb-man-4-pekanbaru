@@ -8,10 +8,24 @@
     </x-slot>
 
     <style>
-        .shadow-sm input,
-        .shadow-sm select {
-            padding: 10px;
+        .pb-form-input {
+            padding: 10px !important;
         }
+        .pb-btn-simpan {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px !important;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .pb-btn-simpan:hover { background: #4338ca; }
     </style>
 
     <div class="py-12">
@@ -59,7 +73,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Label / Nama Berkas</label>
                                     <input type="text" name="label" value="{{ $item->label }}"
-                                           class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm"
+                                           class="pb-form-input w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm"
                                            required>
                                 </div>
 
@@ -67,13 +81,13 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Urutan Tampil</label>
                                     <input type="number" name="urutan" value="{{ $item->urutan }}" min="0"
-                                           class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                           class="pb-form-input w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                 </div>
 
                                 {{-- Wajib --}}
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jenis</label>
-                                    <select name="wajib" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                    <select name="wajib" class="pb-form-input w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                         <option value="1" {{ $item->wajib ? 'selected' : '' }}>⭐ Wajib</option>
                                         <option value="0" {{ !$item->wajib ? 'selected' : '' }}>📎 Opsional</option>
                                     </select>
@@ -82,7 +96,7 @@
                                 {{-- Aktif --}}
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
-                                    <select name="aktif" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                    <select name="aktif" class="pb-form-input w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
                                         <option value="1" {{ $item->aktif ? 'selected' : '' }}>✅ Aktif (tampil ke siswa)</option>
                                         <option value="0" {{ !$item->aktif ? 'selected' : '' }}>🚫 Nonaktif (sembunyikan)</option>
                                     </select>
@@ -90,8 +104,7 @@
                             </div>
 
                             <div class="flex justify-end pt-1">
-                                <button type="submit"
-                                        style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;background:#4f46e5;color:#fff;border:none;cursor:pointer;">
+                                <button type="submit" class="pb-btn-simpan">
                                     <i class="ri-save-line"></i> Simpan
                                 </button>
                             </div>
