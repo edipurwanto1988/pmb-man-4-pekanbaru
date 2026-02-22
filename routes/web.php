@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PenilaianController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\PengumumanController;
 use App\Http\Controllers\Admin\DaftarUlangController;
+use App\Http\Controllers\Admin\PengaturanBerkasController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\BerkasAwalController;
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('pendaftar', [PendaftarController::class, 'index'])->name('pendaftar.index');
     Route::get('pendaftar/{id}', [PendaftarController::class, 'show'])->name('pendaftar.show');
     Route::put('pendaftar/{id}/status', [PendaftarController::class, 'updateStatus'])->name('pendaftar.updateStatus');
+    Route::put('pendaftar/berkas/{berkasId}', [PendaftarController::class, 'updateBerkas'])->name('pendaftar.updateBerkas');
     Route::delete('pendaftar/{id}', [PendaftarController::class, 'destroy'])->name('pendaftar.destroy');
 
     // Verifikasi Berkas
@@ -88,8 +90,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('daftar-ulang/berkas/{id}', [DaftarUlangController::class, 'verifyBerkas'])->name('daftar-ulang.verifyBerkas');
     Route::post('daftar-ulang/{id}/konfirmasi', [DaftarUlangController::class, 'konfirmasi'])->name('daftar-ulang.konfirmasi');
 
-    // Syarat & Berkas
+    // Syarat & Berkas Daftar Ulang
     Route::resource('syarat', SyaratDaftarUlangController::class);
+
+    // Pengaturan Berkas Pendaftaran
+    Route::get('pengaturan-berkas', [PengaturanBerkasController::class, 'index'])->name('pengaturan-berkas.index');
+    Route::put('pengaturan-berkas/{id}', [PengaturanBerkasController::class, 'update'])->name('pengaturan-berkas.update');
 
     // Role Management
     Route::resource('roles', RoleController::class);

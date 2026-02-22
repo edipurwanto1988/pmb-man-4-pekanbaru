@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Siswa;
 use App\Http\Controllers\Controller;
 use App\Models\Berkas;
 use App\Models\CalonSiswa;
+use App\Models\PengaturanBerkas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,13 +25,11 @@ class BerkasAwalController extends Controller
                 ->with('error', 'Data calon siswa tidak ditemukan.');
         }
 
-        $jenisBerkas = [
-            'ijazah' => ['label' => 'Ijazah / SKHUN', 'required' => true],
-            'kk' => ['label' => 'Kartu Keluarga', 'required' => true],
-            'akta' => ['label' => 'Akta Kelahiran', 'required' => true],
-            'foto' => ['label' => 'Pas Foto 3x4', 'required' => true],
-            'raport' => ['label' => 'Raport Terakhir', 'required' => false],
-        ];
+        // Ambil dari DB (bisa diatur oleh admin)
+        $pengaturanList = PengaturanBerkas::where('aktif', true)->orderBy('urutan')->get();
+        $jenisBerkas = $pengaturanList->mapWithKeys(fn($p) => [
+            $p->kode => ['label' => $p->label, 'required' => $p->wajib]
+        ])->toArray();
 
         $uploadedBerkas = Berkas::where('calon_siswa_id', $calonSiswa->id)
             ->get()
@@ -38,6 +37,7 @@ class BerkasAwalController extends Controller
 
         return view('siswa.berkas-awal.index', compact('calonSiswa', 'jenisBerkas', 'uploadedBerkas'));
     }
+
 
     /**
      * Upload a file for a specific jenis berkas.

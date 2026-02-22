@@ -96,32 +96,100 @@
             </div>
 
             <!-- Berkas Pendaftaran -->
-            @if($pendaftar->berkas->count() > 0)
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Berkas Pendaftaran</h3>
-                    <div class="space-y-3">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+                        <i class="ri-folder-2-line text-indigo-500"></i> Berkas Pendaftaran
+                        <span class="text-sm font-normal text-gray-400">({{ $pendaftar->berkas->count() }} berkas)</span>
+                    </h3>
+
+                    @if($pendaftar->berkas->count() > 0)
+                    <div class="space-y-4">
                         @foreach($pendaftar->berkas as $berkas)
-                            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <div>
-                                    <p class="font-medium text-gray-900 dark:text-gray-100 text-sm">{{ ucfirst($berkas->jenis_berkas) }}</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ $berkas->nama_file }}</p>
+                            <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                                {{-- Header berkas --}}
+                                <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-700">
+                                    <div class="flex items-center gap-3">
+                                        @php $ext = strtolower(pathinfo($berkas->nama_file, PATHINFO_EXTENSION)); @endphp
+                                        @if($ext === 'pdf')
+                                            <i class="ri-file-pdf-2-line text-2xl text-red-400"></i>
+                                        @else
+                                            <i class="ri-image-line text-2xl text-blue-400"></i>
+                                        @endif
+                                        <div>
+                                            <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                                {{ ucfirst(str_replace('_', ' ', $berkas->jenis_berkas)) }}
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ $berkas->nama_file }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold
+                                            {{ $berkas->status == 'pending'         ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : '' }}
+                                            {{ $berkas->status == 'diterima'        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : '' }}
+                                            {{ $berkas->status == 'ditolak'         ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : '' }}
+                                            {{ $berkas->status == 'perlu_perbaikan' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' : '' }}
+                                        ">
+                                            @if($berkas->status == 'pending') ⏳ Menunggu
+                                            @elseif($berkas->status == 'diterima') ✅ Diterima
+                                            @elseif($berkas->status == 'ditolak') ❌ Ditolak
+                                            @elseif($berkas->status == 'perlu_perbaikan') ⚠️ Perlu Perbaikan
+                                            @endif
+                                        </span>
+                                        <a href="{{ Storage::url($berkas->path) }}" target="_blank"
+                                           style="display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600;background:#e0e7ff;color:#4338ca;text-decoration:none;">
+                                            <i class="ri-eye-line"></i> Lihat
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="px-2 py-1 rounded-full text-xs font-semibold
-                                        {{ $berkas->status == 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : '' }}
-                                        {{ $berkas->status == 'diterima' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : '' }}
-                                        {{ $berkas->status == 'ditolak' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : '' }}
-                                        {{ $berkas->status == 'perlu_perbaikan' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' : '' }}
-                                    ">{{ ucfirst(str_replace('_', ' ', $berkas->status)) }}</span>
-                                    <a href="{{ Storage::url($berkas->path) }}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Lihat</a>
-                                </div>
+
+                                {{-- Form verifikasi inline --}}
+                                <form action="{{ route('admin.pendaftar.updateBerkas', $berkas->id) }}" method="POST"
+                                      class="px-4 py-3 bg-white dark:bg-gray-800">
+                                    @csrf @method('PUT')
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Status Verifikasi</label>
+                                            <select name="status"
+                                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                                <option value="pending"         {{ $berkas->status == 'pending'         ? 'selected' : '' }}>⏳ Menunggu</option>
+                                                <option value="diterima"        {{ $berkas->status == 'diterima'        ? 'selected' : '' }}>✅ Diterima</option>
+                                                <option value="ditolak"         {{ $berkas->status == 'ditolak'         ? 'selected' : '' }}>❌ Ditolak</option>
+                                                <option value="perlu_perbaikan" {{ $berkas->status == 'perlu_perbaikan' ? 'selected' : '' }}>⚠️ Perlu Perbaikan</option>
+                                            </select>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Keterangan <span class="text-gray-400">(opsional, misal: alasan ditolak)</span>
+                                            </label>
+                                            <div class="flex gap-2">
+                                                <input type="text" name="keterangan"
+                                                       value="{{ $berkas->keterangan }}"
+                                                       placeholder="Contoh: Foto buram, harap upload ulang..."
+                                                       class="flex-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm text-sm">
+                                                <button type="submit"
+                                                        style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;background:#4f46e5;color:#fff;border:none;cursor:pointer;white-space:nowrap;">
+                                                    <i class="ri-save-line"></i> Simpan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if($berkas->keterangan)
+                                        <p class="mt-2 text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                                            <i class="ri-chat-quote-line"></i>
+                                            Keterangan terakhir: <em>{{ $berkas->keterangan }}</em>
+                                        </p>
+                                    @endif
+                                </form>
                             </div>
                         @endforeach
                     </div>
+                    @else
+                        <p class="text-sm text-gray-500 dark:text-gray-400 italic">Siswa belum mengupload berkas apapun.</p>
+                    @endif
                 </div>
             </div>
-            @endif
+
 
             <!-- Hasil Tes -->
             @if($pendaftar->hasilTes->count() > 0)

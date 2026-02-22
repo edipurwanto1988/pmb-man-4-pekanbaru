@@ -54,6 +54,22 @@ class PendaftarController extends Controller
         return redirect()->back()->with('success', 'Status pendaftar berhasil diperbarui.');
     }
 
+    public function updateBerkas(Request $request, string $id)
+    {
+        $request->validate([
+            'status'     => 'required|in:pending,diterima,ditolak,perlu_perbaikan',
+            'keterangan' => 'nullable|string|max:500',
+        ]);
+
+        $berkas = Berkas::findOrFail($id);
+        $berkas->update([
+            'status'     => $request->status,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->back()->with('success', 'Status berkas berhasil diperbarui.');
+    }
+
     public function destroy(string $id)
     {
         $pendaftar = CalonSiswa::findOrFail($id);
