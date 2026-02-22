@@ -52,6 +52,7 @@
                                         <a href="{{ route('admin.daftar-ulang.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Daftar Ulang</a>
                                         <a href="{{ route('admin.landing-page.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Landing Page</a>
                                         <a href="{{ route('admin.syarat.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Syarat Daftar Ulang</a>
+                                        <a href="{{ route('admin.pengaturan-berkas.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 {{ request()->routeIs('admin.pengaturan-berkas.*') ? 'bg-gray-100 dark:bg-gray-600 font-semibold' : '' }}">Pengaturan Berkas</a>
                                         <a href="{{ route('admin.roles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Roles & Permission</a>
                                     </div>
                                 </div>
@@ -158,6 +159,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.syarat.index')" :active="request()->routeIs('admin.syarat.*')">
                     {{ __('Syarat DU') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pengaturan-berkas.index')" :active="request()->routeIs('admin.pengaturan-berkas.*')">
+                    {{ __('Pengaturan Berkas') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                     {{ __('Roles & Permission') }}
