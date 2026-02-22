@@ -51,12 +51,15 @@ class LandingPageController extends Controller
     {
         $section = \App\Models\LandingPageSection::findOrFail($id);
         $currentContent = json_decode($section->konten, true) ?? [];
-        $data = $request->except(['_token', '_method', 'items']);
-        
-        // Handle file uploads
+        $data = $request->except(['_token', '_method', 'items', 'galeri_existing', 'galeri_new']);
+
+        // Handle file uploads (top-level, e.g. hero image, sambutan image)
         foreach ($request->allFiles() as $key => $file) {
-            $path = $file->store('landing-page', 'public');
-            $data[$key] = 'storage/' . $path;
+            if ($key === 'galeri_new') continue; // handled separately
+            if (!is_array($file)) {
+                $path = $file->store('landing-page', 'public');
+                $data[$key] = 'storage/' . $path;
+            }
         }
 
         // Merge simple fields
@@ -64,10 +67,10 @@ class LandingPageController extends Controller
             $currentContent[$key] = $value;
         }
 
-        // Handle dynamic items (array)
+        // Handle dynamic items (Jurusan, FAQ, Alur)
         if ($request->has('items')) {
             $currentContent['items'] = $request->input('items');
-            
+
             // Handle file uploads inside items
             if ($request->hasFile('items')) {
                 foreach ($request->file('items') as $index => $itemFiles) {
@@ -79,8 +82,47 @@ class LandingPageController extends Controller
             }
         }
 
+        // Handle Galeri items (foto upload per item)
+        if ($request->has('galeri_existing') || $request->hasFile('galeri_new')) {
+            $galeriItems = [];
+
+            // Process existing items (keep or update caption, maybe replace foto)
+            foreach ($request->input('galeri_existing', []) as $index => $existing) {
+                $fotoPath = $existing['foto'] ?? '';
+
+                // If user uploaded a new foto for this existing item
+                if ($request->hasFile("galeri_new.{$index}.foto")) {
+                    $file = $request->file("galeri_new.{$index}.foto");
+                    $path = $file->store('landing-page/galeri', 'public');
+                    $fotoPath = 'storage/' . $path;
+                }
+
+                $galeriItems[] = [
+                    'foto'    => $fotoPath,
+                    'caption' => $existing['caption'] ?? '',
+                ];
+            }
+
+            // Process brand new items (high index, e.g. 1000+)
+            if ($request->hasFile('galeri_new')) {
+                foreach ($request->file('galeri_new') as $index => $newFiles) {
+                    // Skip indices already handled (existing items replacements)
+                    if (isset($request->input('galeri_existing', [])[$index])) continue;
+                    if (isset($newFiles['foto'])) {
+                        $path = $newFiles['foto']->store('landing-page/galeri', 'public');
+                        $galeriItems[] = [
+                            'foto'    => 'storage/' . $path,
+                            'caption' => $request->input("galeri_new.{$index}.caption", ''),
+                        ];
+                    }
+                }
+            }
+
+            $currentContent['items'] = $galeriItems;
+        }
+
         $section->update([
-            'konten' => json_encode($currentContent),
+            'konten'    => json_encode($currentContent),
             'is_active' => $request->has('is_active')
         ]);
 

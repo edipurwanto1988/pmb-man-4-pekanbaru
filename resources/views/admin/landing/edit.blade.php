@@ -61,8 +61,8 @@
                             </div>
                         @endif
 
-                        <!-- Dynamic Items (Jurusan, FAQ, etc) -->
-                         @if(in_array($section->module->kode_modul, ['jurusan', 'faq', 'alur']))
+                        <!-- Dynamic Items (Jurusan, FAQ, Alur) -->
+                        @if(in_array($section->module->kode_modul, ['jurusan', 'faq', 'alur']))
                             <div class="mb-4 border-t pt-4">
                                 <h3 class="text-lg font-medium mb-2">Items</h3>
                                 <div id="items-container" class="space-y-4">
@@ -83,7 +83,7 @@
                                     @endforeach
                                 </div>
                                 <button type="button" id="add-item" class="mt-2 text-blue-600 hover:underline">+ Add New Item</button>
-                                
+
                                 <template id="item-template">
                                     <div class="p-4 border rounded bg-gray-50 item-row">
                                         @if($section->module->kode_modul == 'jurusan')
@@ -105,9 +105,8 @@
                                         let container = document.getElementById('items-container');
                                         let template = document.getElementById('item-template');
                                         if(template) {
-                                            let index = container.children.length + Math.floor(Math.random() * 1000); // Unique index
+                                            let index = container.children.length + Math.floor(Math.random() * 1000);
                                             let clone = template.content.cloneNode(true);
-                                            // Handle text replacement carefully to avoid breaking HTML
                                             let div = clone.querySelector('div');
                                             div.innerHTML = div.innerHTML.replace(/INDEX/g, index);
                                             container.appendChild(clone);
@@ -115,7 +114,93 @@
                                     });
                                 </script>
                             </div>
-                         @endif
+                        @endif
+
+                        <!-- Galeri: Upload Foto -->
+                        @if($section->module->kode_modul == 'galeri')
+                            <div class="mb-4 border-t pt-4">
+                                <h3 class="text-lg font-medium mb-3">📷 Foto Galeri</h3>
+
+                                {{-- Foto yang sudah ada --}}
+                                <div id="galeri-container" class="space-y-3">
+                                    @foreach($content['items'] ?? [] as $index => $item)
+                                        <div class="p-4 border rounded bg-gray-50 flex gap-4 items-start galeri-row" data-index="{{ $index }}">
+                                            @if(!empty($item['foto']))
+                                                <img src="{{ asset($item['foto']) }}" class="h-24 w-32 object-cover rounded shadow" alt="foto">
+                                            @endif
+                                            <div class="flex-1 space-y-2">
+                                                {{-- Simpan foto lama (tidak diganti jika tidak upload baru) --}}
+                                                <input type="hidden" name="galeri_existing[{{ $index }}][foto]" value="{{ $item['foto'] ?? '' }}">
+                                                <div>
+                                                    <label class="text-sm text-gray-600 font-medium">Ganti Foto (opsional)</label>
+                                                    <input type="file" name="galeri_new[{{ $index }}][foto]" accept="image/*"
+                                                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                                                </div>
+                                                <div>
+                                                    <label class="text-sm text-gray-600 font-medium">Caption</label>
+                                                    <input type="text" name="galeri_existing[{{ $index }}][caption]" value="{{ $item['caption'] ?? '' }}"
+                                                        placeholder="Keterangan foto..."
+                                                        class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-sm">
+                                                </div>
+                                            </div>
+                                            <button type="button" onclick="removeGaleriRow(this)"
+                                                class="text-red-500 hover:text-red-700 text-sm font-semibold mt-1">
+                                                ✕ Hapus
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                {{-- Tambah foto baru --}}
+                                <div id="galeri-new-container" class="space-y-3 mt-3"></div>
+
+                                <button type="button" onclick="addGaleriFoto()"
+                                    class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">
+                                    + Tambah Foto
+                                </button>
+
+                                <script>
+                                    let newGaleriIndex = 1000; // start from high index to avoid collision with existing
+
+                                    function addGaleriFoto() {
+                                        let container = document.getElementById('galeri-new-container');
+                                        let idx = newGaleriIndex++;
+                                        let html = `
+                                            <div class="p-4 border rounded bg-blue-50 flex gap-4 items-start">
+                                                <div class="flex-1 space-y-2">
+                                                    <div>
+                                                        <label class="text-sm text-gray-600 font-medium">Upload Foto <span class="text-red-500">*</span></label>
+                                                        <input type="file" name="galeri_new[${idx}][foto]" accept="image/*" required
+                                                            onchange="previewGaleriFoto(this)"
+                                                            class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                                                        <img class="foto-preview h-24 w-32 object-cover rounded shadow mt-2 hidden" src="" alt="preview">
+                                                    </div>
+                                                    <div>
+                                                        <label class="text-sm text-gray-600 font-medium">Caption</label>
+                                                        <input type="text" name="galeri_new[${idx}][caption]" placeholder="Keterangan foto..."
+                                                            class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-sm">
+                                                    </div>
+                                                </div>
+                                                <button type="button" onclick="this.parentElement.remove()"
+                                                    class="text-red-500 hover:text-red-700 text-sm font-semibold mt-1">✕ Hapus</button>
+                                            </div>`;
+                                        container.insertAdjacentHTML('beforeend', html);
+                                    }
+
+                                    function previewGaleriFoto(input) {
+                                        let preview = input.parentElement.querySelector('.foto-preview');
+                                        if (input.files && input.files[0]) {
+                                            preview.src = URL.createObjectURL(input.files[0]);
+                                            preview.classList.remove('hidden');
+                                        }
+                                    }
+
+                                    function removeGaleriRow(btn) {
+                                        btn.closest('.galeri-row').remove();
+                                    }
+                                </script>
+                            </div>
+                        @endif
 
                          @if($section->module->kode_modul == 'kontak')
                             <div class="mb-4">

@@ -1,16 +1,36 @@
-<section class="bg-gray-50 dark:bg-gray-800">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ $data->title ?? 'Galeri Kegiatan' }}</h2>
-        </div> 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            @foreach($data->items ?? [] as $item)
-            <div class="grid gap-4">
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="{{ str_starts_with($item->image ?? '', 'http') ? $item->image : asset($item->image ?? '') }}" alt="{{ $item->caption ?? '' }}">
+@php
+    $fotoItems = collect($data->items ?? [])->filter(fn($item) => !empty($item->foto))->values();
+@endphp
+
+@if($fotoItems->isNotEmpty())
+<section class="bg-gray-50 py-12 px-4">
+    <div class="mx-auto max-w-screen-xl">
+        {{-- Judul --}}
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-extrabold tracking-tight text-gray-900">
+                {{ $data->title ?? 'Galeri Kegiatan' }}
+            </h2>
+            <p class="mt-2 text-gray-500 text-sm">Dokumentasi kegiatan MAN 4 Kota Pekanbaru</p>
+        </div>
+
+        {{-- Grid Foto --}}
+        <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+            @foreach($fotoItems as $item)
+                <div class="break-inside-avoid overflow-hidden rounded-lg shadow group relative">
+                    <img
+                        class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        src="{{ asset($item->foto) }}"
+                        alt="{{ $item->caption ?? '' }}"
+                        onerror="this.parentElement.style.display='none'"
+                    >
+                    @if(!empty($item->caption))
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <p class="text-white text-xs font-medium">{{ $item->caption }}</p>
+                        </div>
+                    @endif
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
 </section>
+@endif

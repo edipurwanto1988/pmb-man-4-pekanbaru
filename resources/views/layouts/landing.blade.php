@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'PMB MAN 4 Pekanbaru') }}</title>
+    <title>{{ config('app.name', 'PNBM MAN 4 Kota Pekanbaru') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo_man.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-gray-50 text-gray-800 font-sans">
@@ -13,7 +14,7 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('logo_man.png') }}" class="h-10" alt="Logo MAN 4">
-                <span class="self-center text-xl font-bold whitespace-nowrap text-green-700">PMB MAN 4</span>
+                <span class="self-center text-xl font-bold whitespace-nowrap text-green-700">PNBM MAN 4 Kota Pekanbaru</span>
             </a>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 @auth
@@ -62,7 +63,7 @@
             <div class="sm:flex sm:items-center sm:justify-between">
                 <a href="#" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                     <img src="{{ asset('logo_man.png') }}" class="h-8" alt="Logo MAN 4"/>
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-green-700">MAN 4 Pekanbaru</span>
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-green-700">PNBM MAN 4 Kota Pekanbaru</span>
                 </a>
                 <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0">
                     <li><a href="#" class="hover:underline me-4 md:me-6">Profil</a></li>
@@ -71,7 +72,7 @@
                 </ul>
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
-            <span class="block text-sm text-gray-500 sm:text-center">© 2024 <a href="#" class="hover:underline">MAN 4 Pekanbaru</a>. All Rights Reserved.</span>
+            <span class="block text-sm text-gray-500 sm:text-center">© 2026 <a href="#" class="hover:underline">MAN 4 Pekanbaru</a>. All Rights Reserved.</span>
         </div>
     </footer>
 
