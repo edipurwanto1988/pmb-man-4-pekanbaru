@@ -41,10 +41,10 @@ class PenilaianController extends Controller
     public function store(Request $request, string $id)
     {
         $request->validate([
-            'jenis_tes' => 'required|in:akademik,ibadah',
-            'nilai' => 'required|numeric|min:0|max:100',
-            'status' => 'required|in:lulus,tidak_lulus,belum_dinilai',
-            'catatan' => 'nullable|string',
+            'jenis_tes'   => 'required|in:akademik,ibadah',
+            'nilai'       => 'nullable|numeric|min:0|max:100',
+            'status'      => 'required|in:lulus,tidak_lulus,belum_dinilai',
+            'catatan'     => 'nullable|string',
             'tanggal_tes' => 'nullable|date',
         ]);
 
@@ -53,18 +53,34 @@ class PenilaianController extends Controller
         HasilTes::updateOrCreate(
             [
                 'calon_siswa_id' => $pendaftar->id,
-                'jenis_tes' => $request->jenis_tes,
+                'jenis_tes'      => $request->jenis_tes,
             ],
             [
-                'nilai' => $request->nilai,
-                'status' => $request->status,
-                'catatan' => $request->catatan,
-                'tanggal_tes' => $request->tanggal_tes,
+                'nilai'       => $request->filled('nilai') ? $request->nilai : null,
+                'status'      => $request->status,
+                'catatan'     => $request->catatan,
+                'tanggal_tes' => $request->filled('tanggal_tes') ? $request->tanggal_tes : null,
             ]
         );
 
         // Auto-update student status based on test results
-        $this->updateStudentTestStatus($pendaftar);
+        $this->updateStudentTestStatus($pendaftar->fresh());
+
+        if ($request->ajax() || $request->wantsJson()) {
+            $pendaftar->refresh();
+            $statusLabel = match($pendaftar->status) {
+                'lulus_tes'          => 'Lulus Tes',
+                'tidak_lulus_tes'    => 'Tidak Lulus Tes',
+                'lulus_administrasi' => 'Lulus Administrasi',
+                default              => ucfirst(str_replace('_', ' ', $pendaftar->status)),
+            };
+            return response()->json([
+                'success'      => true,
+                'message'      => 'Status ' . $request->jenis_tes . ' berhasil disimpan: ' . ucfirst(str_replace('_', ' ', $request->status)),
+                'siswa_status' => $pendaftar->status,
+                'status_label' => $statusLabel,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Nilai tes berhasil disimpan.');
     }
