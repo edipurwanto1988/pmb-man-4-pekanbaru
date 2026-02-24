@@ -86,9 +86,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Daftar Ulang (Admin)
     Route::get('daftar-ulang', [DaftarUlangController::class, 'index'])->name('daftar-ulang.index');
-    Route::get('daftar-ulang/{id}', [DaftarUlangController::class, 'show'])->name('daftar-ulang.show');
-    Route::put('daftar-ulang/berkas/{id}', [DaftarUlangController::class, 'verifyBerkas'])->name('daftar-ulang.verifyBerkas');
-    Route::post('daftar-ulang/{id}/konfirmasi', [DaftarUlangController::class, 'konfirmasi'])->name('daftar-ulang.konfirmasi');
+    Route::put('daftar-ulang/{id}/status', [DaftarUlangController::class, 'updateStatus'])->name('daftar-ulang.updateStatus');
+    Route::post('daftar-ulang/info', [DaftarUlangController::class, 'saveInfo'])->name('daftar-ulang.saveInfo');
 
     // Syarat & Berkas Daftar Ulang
     Route::resource('syarat', SyaratDaftarUlangController::class);
@@ -110,10 +109,8 @@ Route::middleware(['auth', 'role:calon_siswa'])->prefix('siswa')->name('siswa.')
     Route::post('/berkas-awal', [BerkasAwalController::class, 'store'])->name('berkas-awal.store');
     Route::delete('/berkas-awal/{id}', [BerkasAwalController::class, 'destroy'])->name('berkas-awal.destroy');
 
-    // Berkas Daftar Ulang
-    Route::get('/berkas', [BerkasDaftarUlangController::class, 'index'])->name('berkas.index');
-    Route::post('/berkas', [BerkasDaftarUlangController::class, 'store'])->name('berkas.store');
-    Route::delete('/berkas/{id}', [BerkasDaftarUlangController::class, 'destroy'])->name('berkas.destroy');
+    // Daftar Ulang (info saja, tanpa upload)
+    Route::get('/daftar-ulang', [SiswaDashboardController::class, 'daftarUlang'])->name('daftar-ulang');
 
     // Jadwal
     Route::get('/jadwal', [SiswaDashboardController::class, 'jadwal'])->name('jadwal');

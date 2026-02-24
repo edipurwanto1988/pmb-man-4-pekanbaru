@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CalonSiswa;
-use App\Models\BerkasDaftarUlang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DaftarUlangController extends Controller
 {
     public function index(Request $request)
     {
-        $query = CalonSiswa::with(['user', 'berkasDaftarUlang.syarat'])
-            ->whereIn('status', ['lulus_pnbm', 'daftar_ulang', 'resmi_terdaftar']);
+        $query = CalonSiswa::with('user')
+            ->whereIn('status', ['lulus_pnbm', 'daftar_ulang', 'resmi_terdaftar', 'tidak_lulus_pnbm']);
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -26,38 +26,50 @@ class DaftarUlangController extends Controller
             $query->where('status', $request->status);
         }
 
-        $pendaftars = $query->latest()->paginate(15);
+        $pendaftars = $query->latest()->paginate(20);
 
-        return view('admin.daftar-ulang.index', compact('pendaftars'));
+        // Ambil info barang bawaan dari settings
+        $infoBawaan = DB::table('pengaturan_daftar_ulang')
+            ->where('key', 'info_barang_bawaan')
+            ->value('value');
+
+        return view('admin.daftar-ulang.index', compact('pendaftars', 'infoBawaan'));
     }
 
-    public function show(string $id)
+    // Update status lulus/tidak lulus daftar ulang
+    public function updateStatus(Request $request, string $id)
     {
-        $pendaftar = CalonSiswa::with(['user', 'berkasDaftarUlang.syarat'])->findOrFail($id);
-        return view('admin.daftar-ulang.show', compact('pendaftar'));
-    }
-
-    public function verifyBerkas(Request $request, string $id)
-    {
-        $berkas = BerkasDaftarUlang::findOrFail($id);
-
         $request->validate([
-            'status' => 'required|in:verified,rejected',
-            'catatan' => 'nullable|string',
+            'status' => 'required|in:resmi_terdaftar,tidak_lulus_pnbm,daftar_ulang,lulus_pnbm',
         ]);
 
-        $berkas->update([
-            'status' => $request->status,
-            'catatan' => $request->catatan,
-        ]);
+        $pendaftar = CalonSiswa::findOrFail($id);
+        $pendaftar->update(['status' => $request->status]);
 
-        return redirect()->back()->with('success', 'Status berkas daftar ulang berhasil diperbarui.');
+        $label = match($request->status) {
+            'resmi_terdaftar'  => 'Resmi Terdaftar ✅',
+            'tidak_lulus_pnbm' => 'Tidak Lulus ❌',
+            'daftar_ulang'     => 'Proses Daftar Ulang',
+            'lulus_pnbm'       => 'Lulus PMB',
+            default            => ucfirst($request->status),
+        };
+
+        return redirect()->back()->with('success', $pendaftar->nama_lengkap . ' → ' . $label);
     }
 
-    public function konfirmasi(string $id)
+    // Simpan pengaturan info barang bawaan
+    public function saveInfo(Request $request)
     {
-        $pendaftar = CalonSiswa::findOrFail($id);
-        $pendaftar->update(['status' => 'resmi_terdaftar']);
-        return redirect()->back()->with('success', $pendaftar->nama_lengkap . ' resmi terdaftar sebagai siswa baru.');
+        $request->validate([
+            'info_barang_bawaan' => 'required|string',
+        ]);
+
+        DB::table('pengaturan_daftar_ulang')
+            ->updateOrInsert(
+                ['key' => 'info_barang_bawaan'],
+                ['value' => $request->info_barang_bawaan, 'updated_at' => now()]
+            );
+
+        return redirect()->back()->with('success', 'Info barang bawaan berhasil disimpan.');
     }
 }

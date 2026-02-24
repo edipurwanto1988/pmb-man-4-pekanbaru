@@ -7,6 +7,7 @@ use App\Models\CalonSiswa;
 use App\Models\Jadwal;
 use App\Models\HasilTes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SiswaDashboardController extends Controller
 {
@@ -51,6 +52,17 @@ class SiswaDashboardController extends Controller
         $calonSiswa = CalonSiswa::where('user_id', $user->id)->first();
 
         return view('siswa.pengumuman', compact('calonSiswa'));
+    }
+
+    public function daftarUlang()
+    {
+        $calonSiswa = CalonSiswa::where('user_id', Auth::id())->first();
+
+        $infoBawaan = DB::table('pengaturan_daftar_ulang')
+            ->where('key', 'info_barang_bawaan')
+            ->value('value');
+
+        return view('siswa.daftar-ulang', compact('calonSiswa', 'infoBawaan'));
     }
 
     public function editBiodata()
