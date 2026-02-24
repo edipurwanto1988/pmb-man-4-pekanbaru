@@ -17,34 +17,36 @@
             <!-- Filters and Actions -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <form method="GET" class="flex flex-wrap gap-4 items-end">
-                        <div class="flex-1 min-w-[200px]">
-                            <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cari</label>
-                            <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Nama atau NISN..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        </div>
-                        <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
-                            <select name="status" id="status" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                <option value="">Semua Status</option>
-                                <option value="terdaftar" {{ request('status') == 'terdaftar' ? 'selected' : '' }}>Terdaftar</option>
-                                <option value="menunggu_verifikasi" {{ request('status') == 'menunggu_verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
-                                <option value="lulus_administrasi" {{ request('status') == 'lulus_administrasi' ? 'selected' : '' }}>Lulus Administrasi</option>
-                                <option value="tidak_lulus_administrasi" {{ request('status') == 'tidak_lulus_administrasi' ? 'selected' : '' }}>Tidak Lulus Administrasi</option>
-                                <option value="lulus_tes" {{ request('status') == 'lulus_tes' ? 'selected' : '' }}>Lulus Tes</option>
-                                <option value="tidak_lulus_tes" {{ request('status') == 'tidak_lulus_tes' ? 'selected' : '' }}>Tidak Lulus Tes</option>
-                                <option value="lulus_pnbm" {{ request('status') == 'lulus_pnbm' ? 'selected' : '' }}>Lulus PMB</option>
-                                <option value="daftar_ulang" {{ request('status') == 'daftar_ulang' ? 'selected' : '' }}>Daftar Ulang</option>
-                                <option value="resmi_terdaftar" {{ request('status') == 'resmi_terdaftar' ? 'selected' : '' }}>Resmi Terdaftar</option>
-                            </select>
-                        </div>
-                        <x-primary-button>Filter</x-primary-button>
-                        @if(request()->hasAny(['search', 'status']))
-                            <a href="{{ route('admin.pendaftar.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-400">Reset</a>
-                        @endif
-                        <a href="{{ route('admin.pendaftar.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-auto">
+                    <div class="flex flex-wrap gap-4 items-end justify-between">
+                        <form method="GET" class="flex flex-wrap gap-4 items-end">
+                            <div class="flex-1 min-w-[200px]">
+                                <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cari</label>
+                                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Nama atau NISN..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                                <select name="status" id="status" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">Semua Status</option>
+                                    <option value="terdaftar" {{ request('status') == 'terdaftar' ? 'selected' : '' }}>Terdaftar</option>
+                                    <option value="menunggu_verifikasi" {{ request('status') == 'menunggu_verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
+                                    <option value="lulus_administrasi" {{ request('status') == 'lulus_administrasi' ? 'selected' : '' }}>Lulus Administrasi</option>
+                                    <option value="tidak_lulus_administrasi" {{ request('status') == 'tidak_lulus_administrasi' ? 'selected' : '' }}>Tidak Lulus Administrasi</option>
+                                    <option value="lulus_tes" {{ request('status') == 'lulus_tes' ? 'selected' : '' }}>Lulus Tes</option>
+                                    <option value="tidak_lulus_tes" {{ request('status') == 'tidak_lulus_tes' ? 'selected' : '' }}>Tidak Lulus Tes</option>
+                                    <option value="lulus_pnbm" {{ request('status') == 'lulus_pnbm' ? 'selected' : '' }}>Lulus PMB</option>
+                                    <option value="daftar_ulang" {{ request('status') == 'daftar_ulang' ? 'selected' : '' }}>Daftar Ulang</option>
+                                    <option value="resmi_terdaftar" {{ request('status') == 'resmi_terdaftar' ? 'selected' : '' }}>Resmi Terdaftar</option>
+                                </select>
+                            </div>
+                            <x-primary-button>Filter</x-primary-button>
+                            @if(request()->hasAny(['search', 'status']))
+                                <a href="{{ route('admin.pendaftar.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-400">Reset</a>
+                            @endif
+                        </form>
+                        <a href="{{ route('admin.pendaftar.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                             <i class="ri-file-excel-2-line mr-2"></i> Export Excel
                         </a>
-                    </form>
+                    </div>
                 </div>
             </div>
 
