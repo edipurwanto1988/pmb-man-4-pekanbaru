@@ -148,14 +148,14 @@
                     </div>
                 </a>
 
-                <a href="{{ route('siswa.berkas.index') }}" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block">
+                <a href="{{ route('siswa.daftar-ulang') }}" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 rounded-md p-3" style="background-color:#f97316;">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                         </div>
                         <div class="ml-4">
                             <p class="font-semibold text-gray-900 dark:text-gray-100">Daftar Ulang</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Upload berkas DU</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Info & status daftar ulang</p>
                         </div>
                     </div>
                 </a>
