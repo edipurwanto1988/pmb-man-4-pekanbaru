@@ -3,7 +3,40 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'PMBM MAN 4 Kota Pekanbaru') }}</title>
+
+    @php
+        $siteName    = 'PMBM MAN 4 Kota Pekanbaru';
+        $siteUrl     = config('app.url');
+        $title       = 'Penerimaan Murid Baru MAN 4 Kota Pekanbaru';
+        $description = 'Daftarkan putra-putri Anda di MAN 4 Kota Pekanbaru. Madrasah Aliyah Negeri unggulan dengan program SAINTEK, SOSHUM, dan Keagamaan. Informasi pendaftaran, jadwal, dan syarat lengkap tersedia di sini.';
+        $image       = asset('man4.jpg');
+        $pageUrl     = url()->current();
+    @endphp
+
+    <title>{{ $title }}</title>
+    <meta name="description" content="{{ $description }}">
+    <meta name="keywords" content="MAN 4 Pekanbaru, Madrasah Aliyah, PMB, Pendaftaran Siswa Baru, Penerimaan Murid Baru, MAN 4 Kota Pekanbaru">
+    <meta name="author" content="{{ $siteName }}">
+
+    {{-- Open Graph (Facebook, WhatsApp, Telegram, dll) --}}
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="{{ $siteName }}">
+    <meta property="og:title"       content="{{ $title }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:image"       content="{{ $image }}">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="MAN 4 Kota Pekanbaru">
+    <meta property="og:url"         content="{{ $pageUrl }}">
+    <meta property="og:locale"      content="id_ID">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="{{ $title }}">
+    <meta name="twitter:description" content="{{ $description }}">
+    <meta name="twitter:image"       content="{{ $image }}">
+
+    <link rel="canonical" href="{{ $pageUrl }}">
     <link rel="icon" type="image/png" href="{{ asset('logo_man.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
