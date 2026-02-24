@@ -27,8 +27,8 @@
                                     <p class="text-sm text-yellow-800 dark:text-yellow-200">
                                         <strong>⚠️ Langkah Selanjutnya:</strong> Silakan lakukan proses <strong>Daftar Ulang</strong> dengan mengupload berkas yang diperlukan.
                                     </p>
-                                    <a href="{{ route('siswa.berkas.index') }}" class="mt-3 inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700">
-                                        Lanjut Daftar Ulang →
+                                    <a href="{{ route('siswa.daftar-ulang') }}" class="mt-3 inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700">
+                                        Lihat Info Daftar Ulang →
                                     </a>
                                 </div>
                             @elseif($calonSiswa->status == 'resmi_terdaftar')

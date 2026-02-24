@@ -74,7 +74,7 @@
                         <x-nav-link :href="route('siswa.pengumuman')" :active="request()->routeIs('siswa.pengumuman')">
                             {{ __('Pengumuman') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('siswa.berkas.index')" :active="request()->routeIs('siswa.berkas.*')">
+                        <x-nav-link :href="route('siswa.daftar-ulang')" :active="request()->routeIs('siswa.daftar-ulang')">
                             {{ __('Daftar Ulang') }}
                         </x-nav-link>
                     @endif
@@ -182,7 +182,7 @@
                 <x-responsive-nav-link :href="route('siswa.pengumuman')" :active="request()->routeIs('siswa.pengumuman')">
                     {{ __('Pengumuman') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('siswa.berkas.index')" :active="request()->routeIs('siswa.berkas.*')">
+                <x-responsive-nav-link :href="route('siswa.daftar-ulang')" :active="request()->routeIs('siswa.daftar-ulang')">
                     {{ __('Daftar Ulang') }}
                 </x-responsive-nav-link>
             @endif
