@@ -10,12 +10,9 @@
             <p class="mb-6 leading-relaxed text-gray-600 dark:text-gray-400">
                 {{ $data->content ?? 'Isi sambutan...' }}
             </p>
-            <div class="flex items-center gap-4 mt-4">
-                <div class="w-12 h-1 bg-green-600 rounded-full"></div>
-                <div>
-                    <p class="font-bold text-gray-900 dark:text-white text-base">{{ $data->nama_kepsek ?? 'Kepala Madrasah' }}</p>
-                    <p class="text-sm text-gray-500">Kepala MAN 4 Kota Pekanbaru</p>
-                </div>
+            <div class="mt-4 text-left">
+                <p class="font-bold text-gray-900 dark:text-white text-base">{{ $data->nama_kepsek ?? 'Kepala Madrasah' }}</p>
+                <p class="text-sm text-gray-500">Kepala MAN 4 Kota Pekanbaru</p>
             </div>
         </div>
 
