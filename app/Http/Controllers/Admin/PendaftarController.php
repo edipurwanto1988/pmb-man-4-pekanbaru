@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Exports\CalonSiswaExport;
 use App\Models\CalonSiswa;
 use App\Models\Berkas;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PendaftarController extends Controller
 {
@@ -68,6 +70,12 @@ class PendaftarController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Status berkas berhasil diperbarui.');
+    }
+
+    public function export(Request $request)
+    {
+        $filename = 'data-calon-siswa-' . now()->format('Ymd-His') . '.xlsx';
+        return Excel::download(new CalonSiswaExport($request), $filename);
     }
 
     public function destroy(string $id)

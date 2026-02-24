@@ -14,15 +14,17 @@
                 </div>
             @endif
 
-            <!-- Filters -->
+            <!-- Filters and Actions -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <form method="GET" class="flex flex-wrap gap-4">
+                    <form method="GET" class="flex flex-wrap gap-4 items-end">
                         <div class="flex-1 min-w-[200px]">
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau NISN..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cari</label>
+                            <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Nama atau NISN..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         </div>
                         <div>
-                            <select name="status" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                            <select name="status" id="status" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">Semua Status</option>
                                 <option value="terdaftar" {{ request('status') == 'terdaftar' ? 'selected' : '' }}>Terdaftar</option>
                                 <option value="menunggu_verifikasi" {{ request('status') == 'menunggu_verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
@@ -39,6 +41,9 @@
                         @if(request()->hasAny(['search', 'status']))
                             <a href="{{ route('admin.pendaftar.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-400">Reset</a>
                         @endif
+                        <a href="{{ route('admin.pendaftar.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-auto">
+                            <i class="ri-file-excel-2-line mr-2"></i> Export Excel
+                        </a>
                     </form>
                 </div>
             </div>
@@ -53,6 +58,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">NISN</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tahap</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tgl Daftar</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
@@ -74,6 +80,37 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $p->nisn }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $p->user->email ?? '-' }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        @php
+                                            $tahap = '';
+                                            switch ($p->status) {
+                                                case 'terdaftar':
+                                                case 'menunggu_verifikasi':
+                                                    $tahap = 'Pendaftaran & Verifikasi Awal';
+                                                    break;
+                                                case 'lulus_administrasi':
+                                                case 'tidak_lulus_administrasi':
+                                                    $tahap = 'Seleksi Administrasi';
+                                                    break;
+                                                case 'lulus_tes':
+                                                case 'tidak_lulus_tes':
+                                                    $tahap = 'Seleksi Tes';
+                                                    break;
+                                                case 'lulus_pnbm':
+                                                case 'tidak_lulus_pnbm':
+                                                    $tahap = 'Pengumuman Kelulusan';
+                                                    break;
+                                                case 'daftar_ulang':
+                                                case 'resmi_terdaftar':
+                                                    $tahap = 'Daftar Ulang & Finalisasi';
+                                                    break;
+                                                default:
+                                                    $tahap = 'Tidak Diketahui';
+                                                    break;
+                                            }
+                                        @endphp
+                                        {{ $tahap }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @php
                                             $statusColors = [
@@ -102,7 +139,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada pendaftar.</td>
+                                    <td colspan="8" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada pendaftar.</td>
                                 </tr>
                             @endforelse
                         </tbody>
