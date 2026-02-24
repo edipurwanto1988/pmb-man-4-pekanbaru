@@ -123,4 +123,8 @@ Route::middleware(['auth', 'role:calon_siswa'])->prefix('siswa')->name('siswa.')
 
     // Pengumuman
     Route::get('/pengumuman', [SiswaDashboardController::class, 'pengumuman'])->name('pengumuman');
+
+    // Edit Biodata
+    Route::get('/biodata', [SiswaDashboardController::class, 'editBiodata'])->name('biodata.edit');
+    Route::put('/biodata', [SiswaDashboardController::class, 'updateBiodata'])->name('biodata.update');
 });

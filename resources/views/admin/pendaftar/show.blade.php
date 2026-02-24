@@ -70,6 +70,248 @@
                 </div>
             </div>
 
+
+            {{-- Tombol buka modal --}}
+            <div class="mb-6">
+                <button onclick="document.getElementById('modal-biodata').classList.remove('hidden')"
+                    style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#16a34a; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px;">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Lihat Biodata Lengkap
+                </button>
+            </div>
+
+            {{-- ===================== MODAL BIODATA ===================== --}}
+            <div id="modal-biodata" class="hidden fixed inset-0 z-50 flex items-start justify-center pt-10 px-4"
+                 style="background:rgba(0,0,0,0.55);" onclick="if(event.target===this)this.classList.add('hidden')">
+                <div style="background:#fff; border-radius:14px; width:100%; max-width:780px; max-height:85vh; display:flex; flex-direction:column; box-shadow: 0 25px 60px rgba(0,0,0,0.25);">
+
+                    {{-- Modal Header --}}
+                    <div style="padding:18px 24px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+                        <div>
+                            <h3 style="font-size:16px; font-weight:700; color:#111827; margin:0;">📋 Biodata Lengkap</h3>
+                            <p style="font-size:13px; color:#6b7280; margin:2px 0 0;">{{ $pendaftar->nama_lengkap }} — NISN {{ $pendaftar->nisn }}</p>
+                        </div>
+                        <button onclick="document.getElementById('modal-biodata').classList.add('hidden')"
+                            style="background:#f3f4f6; border:none; border-radius:50%; width:32px; height:32px; font-size:18px; cursor:pointer; color:#374151; display:flex; align-items:center; justify-content:center;">&times;</button>
+                    </div>
+
+                    {{-- Tab Navigasi --}}
+                    <div style="display:flex; gap:0; border-bottom:1px solid #e5e7eb; flex-shrink:0;">
+                        @foreach([
+                            ['id'=>'tab-siswa','label'=>'📋 Siswa','color'=>'#16a34a'],
+                            ['id'=>'tab-ayah','label'=>'👨 Ayah','color'=>'#2563eb'],
+                            ['id'=>'tab-ibu','label'=>'👩 Ibu','color'=>'#db2777'],
+                            ['id'=>'tab-wali','label'=>'🧑 Wali','color'=>'#d97706'],
+                        ] as $i => $tab)
+                        <button id="btn-{{ $tab['id'] }}"
+                            onclick="switchTab('{{ $tab['id'] }}')"
+                            style="padding:12px 20px; border:none; background:{{ $i===0 ? '#f9fafb' : 'transparent' }}; border-bottom:3px solid {{ $i===0 ? $tab['color'] : 'transparent' }}; font-size:13px; font-weight:{{ $i===0 ? '700' : '500' }}; color:{{ $i===0 ? $tab['color'] : '#6b7280' }}; cursor:pointer; transition:all 0.2s; white-space:nowrap;"
+                            data-color="{{ $tab['color'] }}">
+                            {{ $tab['label'] }}
+                        </button>
+                        @endforeach
+                    </div>
+
+                    {{-- Tab Content (scrollable) --}}
+                    <div style="overflow-y:auto; flex:1; padding:20px 24px;">
+
+                        {{-- === TAB SISWA === --}}
+                        <div id="tab-siswa" class="bio-tab">
+                            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+                                @php
+                                    $fields_siswa = [
+                                        ['NIK', $pendaftar->nik],
+                                        ['No. KK', $pendaftar->no_kk],
+                                        ['Jenis Kelamin', $pendaftar->jenis_kelamin == 'L' ? 'Laki-laki' : ($pendaftar->jenis_kelamin == 'P' ? 'Perempuan' : null)],
+                                        ['Tempat Lahir', $pendaftar->tempat_lahir],
+                                        ['Tanggal Lahir', $pendaftar->tanggal_lahir ? \Carbon\Carbon::parse($pendaftar->tanggal_lahir)->format('d M Y') : null],
+                                        ['Anak Ke / Dari', $pendaftar->anak_ke ? $pendaftar->anak_ke.' / '.$pendaftar->dari_bersaudara.' bersaudara' : null],
+                                        ['Status Keluarga', $pendaftar->status_dalam_keluarga],
+                                        ['Bahasa Harian', $pendaftar->bahasa_harian],
+                                        ['Status Rumah', $pendaftar->status_rumah],
+                                        ['Jarak ke MAN 4', $pendaftar->jarak_rumah_km ? $pendaftar->jarak_rumah_km.' KM' : null],
+                                        ['Transportasi', $pendaftar->transportasi],
+                                        ['No. HP/WA', $pendaftar->no_hp_siswa],
+                                        ['Jurusan Pilihan', $pendaftar->jurusan_pilihan],
+                                        ['Asal Sekolah', $pendaftar->asal_sekolah],
+                                        ['NPSN', $pendaftar->npsn],
+                                        ['NSM', $pendaftar->nsm],
+                                        ['Hobi', $pendaftar->hobi],
+                                        ['Cita-cita', $pendaftar->cita_cita],
+                                        ['Golongan Darah', $pendaftar->golongan_darah],
+                                        ['Riwayat Sakit', $pendaftar->riwayat_sakit],
+                                        ['Tinggi Badan', $pendaftar->tinggi_badan ? $pendaftar->tinggi_badan.' cm' : null],
+                                        ['Berat Badan', $pendaftar->berat_badan ? $pendaftar->berat_badan.' kg' : null],
+                                    ];
+                                @endphp
+                                @foreach($fields_siswa as $f)
+                                <div style="background:#f9fafb; border-radius:8px; padding:10px 12px;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">{{ $f[0] }}</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">{{ $f[1] ?: '-' }}</p>
+                                </div>
+                                @endforeach
+                                {{-- Alamat full width --}}
+                                <div style="grid-column:span 3; background:#f0fdf4; border-radius:8px; padding:10px 12px; border-left:3px solid #16a34a;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">Alamat Lengkap</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">
+                                        {{ $pendaftar->alamat_siswa ?: '-' }}
+                                        {{ $pendaftar->rt_rw_siswa ? ' RT/RW '.$pendaftar->rt_rw_siswa : '' }}
+                                        {{ $pendaftar->kode_pos_siswa ? ', '.$pendaftar->kode_pos_siswa : '' }}
+                                        {{ $pendaftar->kota_siswa ? ' - '.$pendaftar->kota_siswa : '' }}
+                                    </p>
+                                </div>
+                                <div style="grid-column:span 3; background:#f0fdf4; border-radius:8px; padding:10px 12px; border-left:3px solid #16a34a;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">Alamat Asal Sekolah</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">{{ $pendaftar->alamat_asal_sekolah ?: '-' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- === TAB AYAH === --}}
+                        <div id="tab-ayah" class="bio-tab" style="display:none;">
+                            @php
+                                $fields_ayah = [
+                                    ['Nama Ayah', $pendaftar->nama_ayah],
+                                    ['NIK', $pendaftar->nik_ayah],
+                                    ['Tempat Lahir', $pendaftar->tempat_lahir_ayah],
+                                    ['Tanggal Lahir', $pendaftar->tanggal_lahir_ayah ? \Carbon\Carbon::parse($pendaftar->tanggal_lahir_ayah)->format('d M Y') : null],
+                                    ['Pendidikan Terakhir', $pendaftar->pendidikan_ayah],
+                                    ['Pekerjaan', $pendaftar->pekerjaan_ayah],
+                                    ['Penghasilan/Bulan', $pendaftar->penghasilan_ayah],
+                                    ['No. HP/WA', $pendaftar->no_hp_ayah],
+                                ];
+                            @endphp
+                            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+                                @foreach($fields_ayah as $f)
+                                <div style="background:#f9fafb; border-radius:8px; padding:10px 12px;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">{{ $f[0] }}</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">{{ $f[1] ?: '-' }}</p>
+                                </div>
+                                @endforeach
+                                <div style="grid-column:span 3; background:#eff6ff; border-radius:8px; padding:10px 12px; border-left:3px solid #2563eb;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">Alamat Lengkap</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">
+                                        {{ $pendaftar->alamat_ayah ?: '-' }}
+                                        {{ $pendaftar->rt_rw_ayah ? ' RT/RW '.$pendaftar->rt_rw_ayah : '' }}
+                                        {{ $pendaftar->kode_pos_ayah ? ', '.$pendaftar->kode_pos_ayah : '' }}
+                                        {{ $pendaftar->kota_ayah ? ' - '.$pendaftar->kota_ayah : '' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- === TAB IBU === --}}
+                        <div id="tab-ibu" class="bio-tab" style="display:none;">
+                            @php
+                                $fields_ibu = [
+                                    ['Nama Ibu', $pendaftar->nama_ibu],
+                                    ['NIK', $pendaftar->nik_ibu],
+                                    ['Tempat Lahir', $pendaftar->tempat_lahir_ibu],
+                                    ['Tanggal Lahir', $pendaftar->tanggal_lahir_ibu ? \Carbon\Carbon::parse($pendaftar->tanggal_lahir_ibu)->format('d M Y') : null],
+                                    ['Pendidikan Terakhir', $pendaftar->pendidikan_ibu],
+                                    ['Pekerjaan', $pendaftar->pekerjaan_ibu],
+                                    ['Penghasilan/Bulan', $pendaftar->penghasilan_ibu],
+                                    ['No. HP/WA', $pendaftar->no_hp_ibu],
+                                ];
+                            @endphp
+                            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+                                @foreach($fields_ibu as $f)
+                                <div style="background:#f9fafb; border-radius:8px; padding:10px 12px;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">{{ $f[0] }}</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">{{ $f[1] ?: '-' }}</p>
+                                </div>
+                                @endforeach
+                                <div style="grid-column:span 3; background:#fdf2f8; border-radius:8px; padding:10px 12px; border-left:3px solid #db2777;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">Alamat Lengkap</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">
+                                        {{ $pendaftar->alamat_ibu ?: '-' }}
+                                        {{ $pendaftar->rt_rw_ibu ? ' RT/RW '.$pendaftar->rt_rw_ibu : '' }}
+                                        {{ $pendaftar->kode_pos_ibu ? ', '.$pendaftar->kode_pos_ibu : '' }}
+                                        {{ $pendaftar->kota_ibu ? ' - '.$pendaftar->kota_ibu : '' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- === TAB WALI === --}}
+                        <div id="tab-wali" class="bio-tab" style="display:none;">
+                            @if($pendaftar->nama_wali)
+                            @php
+                                $fields_wali = [
+                                    ['Nama Wali', $pendaftar->nama_wali],
+                                    ['NIK', $pendaftar->nik_wali],
+                                    ['Tempat Lahir', $pendaftar->tempat_lahir_wali],
+                                    ['Tanggal Lahir', $pendaftar->tanggal_lahir_wali ? \Carbon\Carbon::parse($pendaftar->tanggal_lahir_wali)->format('d M Y') : null],
+                                    ['Pendidikan Terakhir', $pendaftar->pendidikan_wali],
+                                    ['Pekerjaan', $pendaftar->pekerjaan_wali],
+                                    ['Penghasilan/Bulan', $pendaftar->penghasilan_wali],
+                                    ['No. HP/WA', $pendaftar->no_hp_wali],
+                                ];
+                            @endphp
+                            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+                                @foreach($fields_wali as $f)
+                                <div style="background:#f9fafb; border-radius:8px; padding:10px 12px;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">{{ $f[0] }}</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">{{ $f[1] ?: '-' }}</p>
+                                </div>
+                                @endforeach
+                                <div style="grid-column:span 3; background:#fffbeb; border-radius:8px; padding:10px 12px; border-left:3px solid #d97706;">
+                                    <p style="font-size:11px; color:#9ca3af; margin:0 0 3px;">Alamat Lengkap</p>
+                                    <p style="font-size:13px; font-weight:600; color:#111827; margin:0;">
+                                        {{ $pendaftar->alamat_wali ?: '-' }}
+                                        {{ $pendaftar->rt_rw_wali ? ' RT/RW '.$pendaftar->rt_rw_wali : '' }}
+                                        {{ $pendaftar->kode_pos_wali ? ', '.$pendaftar->kode_pos_wali : '' }}
+                                        {{ $pendaftar->kota_wali ? ' - '.$pendaftar->kota_wali : '' }}
+                                    </p>
+                                </div>
+                            </div>
+                            @else
+                            <div style="text-align:center; padding:40px 0; color:#9ca3af;">
+                                <p style="font-size:32px; margin:0 0 8px;">🧑</p>
+                                <p style="font-size:14px;">Data wali tidak diisi oleh siswa.</p>
+                            </div>
+                            @endif
+                        </div>
+
+                    </div>{{-- end scrollable --}}
+                </div>
+            </div>
+            {{-- ===================== END MODAL ===================== --}}
+
+            <script>
+            function switchTab(activeId) {
+                // sembunyikan semua panel
+                document.querySelectorAll('.bio-tab').forEach(t => t.style.display = 'none');
+                document.getElementById(activeId).style.display = 'block';
+
+                // reset semua tombol tab
+                ['tab-siswa','tab-ayah','tab-ibu','tab-wali'].forEach(id => {
+                    const btn = document.getElementById('btn-' + id);
+                    if (btn) {
+                        btn.style.borderBottomColor = 'transparent';
+                        btn.style.fontWeight = '500';
+                        btn.style.color = '#6b7280';
+                        btn.style.background = 'transparent';
+                    }
+                });
+
+                // aktifkan tombol yang diklik
+                const activeBtn = document.getElementById('btn-' + activeId);
+                if (activeBtn) {
+                    const color = activeBtn.dataset.color;
+                    activeBtn.style.borderBottomColor = color;
+                    activeBtn.style.fontWeight = '700';
+                    activeBtn.style.color = color;
+                    activeBtn.style.background = '#f9fafb';
+                }
+            }
+            </script>
+
+
+
+
+
+
             <!-- Update Status -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">

@@ -36,8 +36,8 @@ class LandingPageSeeder extends Seeder
                 [
                     'urutan' => 1,
                     'konten' => json_encode([
-                        'title' => 'Penerimaan Peserta Didik Baru MAN 4 Kota Pekanbaru',
-                        'subtitle' => 'Mewujudkan Generasi Islami, Cerdas, dan Berprestasi. Tahun Pelajaran 2026/2027',
+                        'title' => 'Penerimaan Murid Baru Madrasah (PMBM) MAN 4 Kota Pekanbaru TAHUN PELAJARAN 2026–2027',
+                        'subtitle' => 'Mewujudkan Generasi RELIGIUS – BERKUALITAS – BEBUDAYA',
                         'image' => 'images/hero-bg.jpg',
                         'cta_text' => 'Daftar Sekarang',
                         'cta_link' => '/register'
@@ -58,7 +58,7 @@ class LandingPageSeeder extends Seeder
                         'title' => 'Sambutan Kepala Madrasah',
                         'content' => 'Assalamu\'alaikum Warahmatullahi Wabarakatuh. Puji syukur kehadirat Allah SWT, kami mengucapkan selamat datang kepada calon peserta didik baru MAN 4 Kota Pekanbaru. Madrasah kami berkomitmen untuk mencetak generasi yang unggul dalam ilmu pengetahuan, teknologi, dan keagamaan. Dengan tenaga pendidik profesional dan fasilitas yang memadai, kami siap membimbing putra-putri terbaik bangsa menuju masa depan gemilang. Mari bergabung bersama kami dalam perjalanan meraih prestasi akademik dan spiritual yang luar biasa.',
                         'image' => 'images/kepsek.jpg',
-                        'nama_kepsek' => 'Drs. H. Ahmad Fauzi, M.Pd.I'
+                        'nama_kepsek' => 'Dr. Irwan Efendi, M.Pd.I'
                     ]),
                     'is_active' => true,
                 ]
@@ -76,11 +76,11 @@ class LandingPageSeeder extends Seeder
                         'title' => 'Program Studi Unggulan',
                         'items' => [
                             [
-                                'nama' => 'MIPA',
+                                'nama' => 'SAINTEK',
                                 'desc' => 'Program unggulan dengan fokus pada Matematika, Fisika, Kimia, dan Biologi. Dilengkapi laboratorium modern dan bimbingan olimpiade sains tingkat nasional.'
                             ],
                             [
-                                'nama' => 'IPS',
+                                'nama' => 'SOSHUM',
                                 'desc' => 'Program studi yang mengembangkan kemampuan analisis sosial, ekonomi, geografi, dan sosiologi. Mempersiapkan siswa untuk karier di bidang hukum, bisnis, dan pemerintahan.'
                             ],
                             [
@@ -102,32 +102,36 @@ class LandingPageSeeder extends Seeder
                 [
                     'urutan' => 4,
                     'konten' => json_encode([
-                        'title' => 'Alur Pendaftaran PMB',
+                        'title' => 'Alur Pendaftaran PMBM',
                         'subtitle' => 'Ikuti langkah-langkah mudah berikut untuk mendaftar sebagai calon peserta didik baru',
                         'items' => [
                             [
-                                'title' => 'Registrasi Online',
-                                'desc' => 'Buat akun dan isi formulir pendaftaran secara online melalui website ini. Siapkan data diri dan dokumen yang diperlukan.'
+                                'title' => 'SOSIALISASI',
+                                'desc' => '19 Januari – 28 Februari 2026'
                             ],
                             [
-                                'title' => 'Upload Berkas',
-                                'desc' => 'Unggah berkas persyaratan seperti ijazah/SKL, rapor, akta kelahiran, kartu keluarga, dan pas foto terbaru.'
+                                'title' => 'PENDAFTARAN',
+                                'desc' => '1 Maret – 10 April 2026'
                             ],
                             [
-                                'title' => 'Verifikasi Administrasi',
-                                'desc' => 'Tim panitia akan memverifikasi kelengkapan dan keabsahan berkas yang telah diunggah. Pantau status di dashboard.'
+                                'title' => 'PENGUMUMAN KELULUSAN ADMINISTRASI',
+                                'desc' => '11 April 2026'
                             ],
                             [
-                                'title' => 'Tes Masuk',
-                                'desc' => 'Ikuti tes akademik dan tes baca Al-Quran sesuai jadwal yang telah ditentukan. Persiapkan diri dengan baik.'
+                                'title' => 'TES AKADEMIK, IBADAH & BACA AL-QUR\'AN',
+                                'desc' => '13 April 2026'
                             ],
                             [
-                                'title' => 'Pengumuman',
-                                'desc' => 'Hasil seleksi akan diumumkan melalui website dan dashboard siswa. Cek secara berkala untuk mengetahui hasilnya.'
+                                'title' => 'PENGUMUMAN HASIL TES',
+                                'desc' => '14 April 2026'
                             ],
                             [
-                                'title' => 'Daftar Ulang',
-                                'desc' => 'Bagi yang dinyatakan lulus, lakukan daftar ulang dengan mengumpulkan berkas asli dan membayar biaya pendaftaran.'
+                                'title' => 'RAPAT KOMITE',
+                                'desc' => '16 April 2026'
+                            ],
+                            [
+                                'title' => 'DAFTAR ULANG',
+                                'desc' => '16–17 April 2026'
                             ]
                         ]
                     ]),
@@ -147,7 +151,7 @@ class LandingPageSeeder extends Seeder
                         'title' => 'Berita & Informasi Terkini',
                         'items' => [
                             [
-                                'title' => 'Pendaftaran PMB 2026/2027 Resmi Dibuka!',
+                                'title' => 'Pendaftaran PMBM 2026/2027 Resmi Dibuka!',
                                 'excerpt' => 'MAN 4 Kota Pekanbaru resmi membuka pendaftaran peserta didik baru untuk tahun ajaran 2026/2027. Segera daftarkan diri Anda melalui portal online kami.',
                                 'date' => '10 Februari 2026'
                             ],
@@ -204,8 +208,8 @@ class LandingPageSeeder extends Seeder
                         'title' => 'Pertanyaan yang Sering Diajukan (FAQ)',
                         'items' => [
                             [
-                                'question' => 'Kapan pendaftaran PMB MAN 4 dibuka?',
-                                'answer' => 'Pendaftaran PMB MAN 4 Kota Pekanbaru untuk tahun ajaran 2026/2027 dibuka mulai 10 Februari 2026 hingga 30 April 2026. Segera daftar sebelum kuota terpenuhi.'
+                                'question' => 'Kapan pendaftaran PMBM MAN 4 dibuka?',
+                                'answer' => 'Pendaftaran PMBM MAN 4 Kota Pekanbaru untuk tahun ajaran 2026/2027 dibuka mulai 10 Februari 2026 hingga 30 April 2026. Segera daftar sebelum kuota terpenuhi.'
                             ],
                             [
                                 'question' => 'Apa saja berkas yang diperlukan untuk mendaftar?',
@@ -217,7 +221,7 @@ class LandingPageSeeder extends Seeder
                             ],
                             [
                                 'question' => 'Berapa biaya pendaftaran?',
-                                'answer' => 'Biaya pendaftaran PMB MAN 4 Kota Pekanbaru bersifat terjangkau. Informasi detail mengenai biaya dapat dilihat pada saat proses daftar ulang atau hubungi panitia PMB.'
+                                'answer' => 'Biaya pendaftaran PMBM MAN 4 Kota Pekanbaru bersifat terjangkau. Informasi detail mengenai biaya dapat dilihat pada saat proses daftar ulang atau hubungi panitia PMBM.'
                             ],
                             [
                                 'question' => 'Bagaimana cara memantau status pendaftaran?',
@@ -243,11 +247,10 @@ class LandingPageSeeder extends Seeder
                     'urutan' => 8,
                     'konten' => json_encode([
                         'title' => 'Hubungi Kami',
-                        'subtitle' => 'Silakan hubungi panitia PMB MAN 4 Kota Pekanbaru untuk informasi lebih lanjut',
+                        'subtitle' => 'Silakan hubungi panitia PMBM MAN 4 Kota Pekanbaru untuk informasi lebih lanjut',
                         'address' => 'Jl. Yos Sudarso KM. 15, Muara Fajar, Kec. Rumbai, Kota Pekanbaru, Riau 28264',
-                        'email' => 'info@man4pekanbaru.sch.id',
-                        'phone' => '(0761) 123-456',
-                        'whatsapp' => '0812-7654-3210',
+                        'phone' => '081268713026 (HUMAS)',
+                        'whatsapp' => '081268713026',
                     ]),
                     'is_active' => true,
                 ]

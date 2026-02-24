@@ -9,9 +9,8 @@
                 <h3 class="mb-4 text-2xl font-bold dark:text-white">Alamat</h3>
                 <p class="text-gray-500 dark:text-gray-400 mb-6">{{ $data->address ?? 'Jl. Yos Sudarso KM. 15, Muara Fajar, Rumbai Barat, Pekanbaru' }}</p>
                 
-                <h3 class="mb-4 text-2xl font-bold dark:text-white">Email & Telepon</h3>
-                <p class="text-gray-500 dark:text-gray-400">{{ $data->email ?? 'pmb@man4pekanbaru.sch.id' }}</p>
-                <p class="text-gray-500 dark:text-gray-400">{{ $data->phone ?? '0812-3456-7890' }}</p>
+                <h3 class="mb-4 text-2xl font-bold dark:text-white">Telepon</h3>
+                <p class="text-gray-500 dark:text-gray-400">{{ $data->phone ?? '081268713026 (HUMAS)' }}</p>
             </div>
             <div class="h-96 bg-gray-300 rounded-lg overflow-hidden">
                 <!-- Embed Map -->

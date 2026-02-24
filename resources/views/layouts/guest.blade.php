@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'PNBM MAN 4 Kota Pekanbaru') }}</title>
+        <title>{{ config('app.name', 'PMBM MAN 4 Kota Pekanbaru') }}</title>
         <link rel="icon" type="image/png" href="{{ asset('logo_man.png') }}">
 
         <!-- Fonts -->

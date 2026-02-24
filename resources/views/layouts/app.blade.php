@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'PNBM MAN 4 Kota Pekanbaru') }}</title>
+        <title>{{ config('app.name', 'PMBM MAN 4 Kota Pekanbaru') }}</title>
         <link rel="icon" type="image/png" href="{{ asset('logo_man.png') }}">
 
         <!-- Fonts -->
@@ -42,7 +42,7 @@
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
                         <div class="flex items-center gap-2">
                             <img src="{{ asset('logo_man.png') }}" class="h-6 w-6" alt="Logo MAN 4">
-                            <span class="text-sm font-semibold text-green-700 dark:text-green-400">PNBM MAN 4 Kota Pekanbaru</span>
+                            <span class="text-sm font-semibold text-green-700 dark:text-green-400">PMBM MAN 4 Kota Pekanbaru</span>
                         </div>
                         <span class="text-xs text-gray-400 dark:text-gray-500">
                             © 2026 MAN 4 Kota Pekanbaru. All Rights Reserved.
