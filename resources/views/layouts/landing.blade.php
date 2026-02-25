@@ -9,7 +9,7 @@
         $siteUrl     = config('app.url');
         $title       = 'Penerimaan Murid Baru MAN 4 Kota Pekanbaru';
         $description = 'Daftarkan putra-putri Anda di MAN 4 Kota Pekanbaru. Madrasah Aliyah Negeri unggulan dengan program SAINTEK, SOSHUM, dan Keagamaan. Informasi pendaftaran, jadwal, dan syarat lengkap tersedia di sini.';
-        $image       = asset('man4.jpg');
+        $image       = asset('gedung_man_4.jpeg');
         $pageUrl     = url()->current();
     @endphp
 

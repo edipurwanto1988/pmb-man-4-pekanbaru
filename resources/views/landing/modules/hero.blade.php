@@ -1,7 +1,7 @@
 @php
-    $heroImage = $data->image ?? '';
-    $hasImage = $heroImage && file_exists(public_path($heroImage));
-    $bgStyle = $hasImage
+    $heroImage = 'gedung_man_4.jpeg';
+    $hasImage  = file_exists(public_path($heroImage));
+    $bgStyle   = $hasImage
         ? "background-image: url('" . asset($heroImage) . "'); background-size: cover; background-position: center; background-repeat: no-repeat;"
         : "background: linear-gradient(135deg, #065f46 0%, #047857 30%, #059669 60%, #10b981 100%);";
 @endphp
