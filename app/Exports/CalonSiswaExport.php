@@ -41,6 +41,22 @@ class CalonSiswaExport implements FromQuery, WithHeadings, WithMapping, WithStyl
             });
         }
 
+        if ($this->request->filled('dari_tanggal')) {
+            $query->whereDate('created_at', '>=', $this->request->dari_tanggal);
+        }
+
+        if ($this->request->filled('sampai_tanggal')) {
+            $query->whereDate('created_at', '<=', $this->request->sampai_tanggal);
+        }
+
+        if ($this->request->filled('jenis_kelamin')) {
+            $query->where('jenis_kelamin', $this->request->jenis_kelamin);
+        }
+
+        if ($this->request->filled('jurusan')) {
+            $query->where('jurusan_pilihan', $this->request->jurusan);
+        }
+
         return $query;
     }
 

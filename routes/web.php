@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\PengumumanController;
 use App\Http\Controllers\Admin\DaftarUlangController;
 use App\Http\Controllers\Admin\PengaturanBerkasController;
+use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\BerkasAwalController;
@@ -99,6 +100,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Role Management
     Route::resource('roles', RoleController::class);
+
+    // Laporan
+    Route::get('laporan/pendaftar', [LaporanController::class, 'pendaftar'])->name('laporan.pendaftar');
+    Route::get('laporan/pendaftar/export', [LaporanController::class, 'exportPendaftar'])->name('laporan.export-pendaftar');
 });
 
 // Siswa Routes
