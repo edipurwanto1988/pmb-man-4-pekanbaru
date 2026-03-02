@@ -8,12 +8,12 @@
                     @if(Auth::user()->hasRole('admin'))
                         <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
                             <img src="{{ asset('logo_man.png') }}" class="h-8" alt="Logo MAN 4">
-                            <span class="text-lg font-bold text-green-600 dark:text-green-400">PMB MAN 4</span>
+                            <span class="text-lg font-bold text-green-600 dark:text-green-400">PMBM</span>
                         </a>
                     @else
                         <a href="{{ route('siswa.dashboard') }}" class="flex items-center gap-2">
                             <img src="{{ asset('logo_man.png') }}" class="h-8" alt="Logo MAN 4">
-                            <span class="text-lg font-bold text-green-600 dark:text-green-400">PMB MAN 4</span>
+                            <span class="text-lg font-bold text-green-600 dark:text-green-400">PMBM</span>
                         </a>
                     @endif
                 </div>
