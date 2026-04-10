@@ -139,9 +139,9 @@
             <div class="title">KARTU PESERTA UJIAN</div>
 
             <div class="photo-section">
-                @if($pasFotoPath)
+                @if($calonSiswa->foto_profil)
                     <div style="width: 120px; height: 150px; border: 2px solid #1e40af; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                        <img src="data:image/jpeg;base64,{{ base64_encode(file_get_contents($pasFotoPath)) }}" style="width: 100%; min-height: 100%; object-fit: cover;">
+                        <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 @else
                     <div class="photo-placeholder">
