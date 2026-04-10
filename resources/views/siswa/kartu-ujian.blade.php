@@ -138,73 +138,78 @@
         <div class="content">
             <div class="title">KARTU PESERTA UJIAN</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px;">
-                <div class="photo-section">
-                @if($calonSiswa->foto_profil)
-                    @php
-                        $imagePath = storage_path('app/public/' . $calonSiswa->foto_profil);
-                        $imageData = file_exists($imagePath) ? base64_encode(file_get_contents($imagePath)) : null;
-                        $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
-                    @endphp
-                    @if($imageData)
-                        <div style="width: 120px; height: 150px; border: 2px solid #1e40af; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <img src="data:image/{{ $imageType }};base64,{{ $imageData }}" style="width: 100%; height: 100%; object-fit: cover;">
+            <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 140px; vertical-align: top; padding-right: 20px;">
+                        <div class="photo-section">
+                            @if($calonSiswa->foto_profil)
+                                @php
+                                    $imagePath = storage_path('app/public/' . $calonSiswa->foto_profil);
+                                    $imageData = file_exists($imagePath) ? base64_encode(file_get_contents($imagePath)) : null;
+                                    $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+                                @endphp
+                                @if($imageData)
+                                    <div style="width: 120px; height: 150px; border: 2px solid #1e40af; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img src="data:image/{{ $imageType }};base64,{{ $imageData }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                @else
+                                    <div class="photo-placeholder">
+                                        FOTO 3x4<br>(Tempel Foto)
+                                    </div>
+                                @endif
+                            @else
+                                <div class="photo-placeholder">
+                                    FOTO 3x4<br>(Tempel Foto)
+                                </div>
+                            @endif
                         </div>
-                    @else
-                        <div class="photo-placeholder">
-                            FOTO 3x4<br>(Tempel Foto)
-                        </div>
-                    @endif
-                @else
-                    <div class="photo-placeholder">
-                        FOTO 3x4<br>(Tempel Foto)
-                    </div>
-                @endif
-            </div>
-
-            <table class="info-table">
-                <tr>
-                    <td class="info-label">No. Pendaftaran</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">PPDB-M4C-2026-{{ $calonSiswa->id }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">NISN</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->nisn }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">Nama Lengkap</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->nama_lengkap }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">Tempat, Tgl Lahir</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->tempat_lahir ?? '-' }}, {{ $calonSiswa->tanggal_lahir ? \Carbon\Carbon::parse($calonSiswa->tanggal_lahir)->format('d/m/Y') : '-' }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">Jenis Kelamin</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">No. HP/WA</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->no_hp_siswa }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">Asal Sekolah</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->asal_sekolah ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td class="info-label">Jurusan Pilihan</td>
-                    <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->jurusan_pilihan ?? '-' }}</td>
+                    </td>
+                    <td style="vertical-align: top;">
+                        <table class="info-table">
+                            <tr>
+                                <td class="info-label">No. Pendaftaran</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">PPDB-M4C-2026-{{ $calonSiswa->id }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">NISN</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->nisn }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">Nama Lengkap</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->nama_lengkap }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">Tempat, Tgl Lahir</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->tempat_lahir ?? '-' }}, {{ $calonSiswa->tanggal_lahir ? \Carbon\Carbon::parse($calonSiswa->tanggal_lahir)->format('d/m/Y') : '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">Jenis Kelamin</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">No. HP/WA</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->no_hp_siswa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">Asal Sekolah</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->asal_sekolah ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="info-label">Jurusan Pilihan</td>
+                                <td class="info-separator">:</td>
+                                <td class="info-value">{{ $calonSiswa->jurusan_pilihan ?? '-' }}</td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
             </table>
-            </div>
 
             <div class="status">
                 STATUS: {{ strtoupper(str_replace('_', ' ', $calonSiswa->status)) }}
