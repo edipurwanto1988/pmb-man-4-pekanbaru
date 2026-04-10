@@ -226,16 +226,24 @@
             </div>
 
             <div class="signature">
-                <div class="signature-box">
-                    <div>Panitia PMB</div>
-                    <div class="signature-space"></div>
-                    <div>( ................................. )</div>
-                </div>
-                <div class="signature-box">
-                    <div>Peserta Ujian</div>
-                    <div class="signature-space"></div>
-                    <div>( {{ $calonSiswa->nama_lengkap }} )</div>
-                </div>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="width: 50%; text-align: center;">
+                            <div class="signature-box">
+                                <div>Panitia PMB</div>
+                                <div class="signature-space"></div>
+                                <div>( ................................. )</div>
+                            </div>
+                        </td>
+                        <td style="width: 50%; text-align: center;">
+                            <div class="signature-box">
+                                <div>Peserta Ujian</div>
+                                <div class="signature-space"></div>
+                                <div>( {{ $calonSiswa->nama_lengkap }} )</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
