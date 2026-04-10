@@ -40,6 +40,26 @@
                 <span style="font-weight:700; color:#14532d; font-size:16px;">{{ $calonSiswa->nisn }}</span>
             </div>
 
+            {{-- Foto Profil --}}
+            <div style="background:#fff; border-radius:10px; padding:20px; margin-bottom:20px; border:1px solid #d1fae5;">
+                <h3 style="font-size:16px; font-weight:700; color:#14532d; margin:0 0 15px;">📷 Foto Profil (Ukuran 3:4)</h3>
+                <div style="display:flex; gap:20px; align-items:flex-start;">
+                    <div style="flex:1;">
+                        @if($calonSiswa->foto_profil)
+                            <div style="margin-bottom:15px;">
+                                <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" alt="Foto Profil" style="width:120px; height:160px; object-fit:cover; border-radius:8px; border:2px solid #d1fae5;">
+                            </div>
+                        @endif
+                        <x-input-label for="foto_profil" :value="__('Upload Foto Baru')" />
+                        <input type="file" id="foto_profil" name="foto_profil" accept="image/*" style="border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; width:100%; margin-top:4px; font-size:14px;">
+                        @error('foto_profil')
+                            <p style="color:#ef4444; font-size:12px; margin-top:5px;">{{ $message }}</p>
+                        @enderror
+                        <p style="color:#6b7280; font-size:12px; margin-top:8px;">Format: JPG, PNG, JPEG. Maksimal: 2MB.</p>
+                    </div>
+                </div>
+            </div>
+
             <form method="POST" action="{{ route('siswa.biodata.update') }}" id="biodata-form">
                 @csrf
                 @method('PUT')

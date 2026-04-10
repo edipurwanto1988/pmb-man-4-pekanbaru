@@ -146,4 +146,7 @@ Route::middleware(['auth', 'role:calon_siswa'])->prefix('siswa')->name('siswa.')
 
     // Kartu Ujian
     Route::get('/kartu-ujian', [SiswaDashboardController::class, 'kartuUjian'])->name('kartu-ujian');
+
+    // Upload Pas Foto
+    Route::post('/biodata/pas-foto', [SiswaDashboardController::class, 'uploadPasFoto'])->name('biodata.pas-foto');
 });

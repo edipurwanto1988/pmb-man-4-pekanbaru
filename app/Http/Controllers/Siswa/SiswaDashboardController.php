@@ -8,6 +8,7 @@ use App\Models\Jadwal;
 use App\Models\HasilTes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class SiswaDashboardController extends Controller
@@ -106,6 +107,7 @@ class SiswaDashboardController extends Controller
             'riwayat_sakit'     => ['nullable', 'string'],
             'tinggi_badan'      => ['nullable', 'string', 'max:10'],
             'berat_badan'       => ['nullable', 'string', 'max:10'],
+            'foto_profil'       => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
             // Ayah
             'nama_ayah'         => ['nullable', 'string', 'max:255'],
             'nik_ayah'          => ['nullable', 'string', 'max:16'],
@@ -150,6 +152,14 @@ class SiswaDashboardController extends Controller
             'no_hp_siswa.required'  => 'No. HP/WA siswa wajib diisi.',
         ]);
 
+        // Handle photo upload
+        if ($request->hasFile('foto_profil')) {
+            $file = $request->file('foto_profil');
+            $filename = 'foto_profil_' . time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('foto_profil', $filename, 'public');
+            $validated['foto_profil'] = 'foto_profil/' . $filename;
+        }
+
         $calonSiswa->update($validated);
 
         // Sync nama di tabel users
@@ -172,7 +182,7 @@ class SiswaDashboardController extends Controller
         }
 
         $data = [
-            'calonSiswa' => $calonSiswa,
+            'calonSiswa'    => $calonSiswa,
             'tanggal_cetak' => now()->format('d F Y'),
         ];
 

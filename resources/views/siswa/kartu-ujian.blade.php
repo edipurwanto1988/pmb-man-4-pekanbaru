@@ -139,16 +139,20 @@
             <div class="title">KARTU PESERTA UJIAN</div>
 
             <div class="photo-section">
-                <div class="photo-placeholder">
-                    FOTO 3x4<br>(Tempel Foto)
-                </div>
+                @if($calonSiswa->foto_profil)
+                    <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" alt="Foto Profil" style="width:120px; height:160px; object-fit:cover; border-radius:8px; border:2px solid #d1fae5;">
+                @else
+                    <div class="photo-placeholder">
+                        FOTO 3x4<br>(Tempel Foto)
+                    </div>
+                @endif
             </div>
 
             <table class="info-table">
                 <tr>
                     <td class="info-label">No. Pendaftaran</td>
                     <td class="info-separator">:</td>
-                    <td class="info-value">{{ $calonSiswa->id }}</td>
+                    <td class="info-value">PPDB-M4C-2026-{{ $calonSiswa->id }}</td>
                 </tr>
                 <tr>
                     <td class="info-label">NISN</td>

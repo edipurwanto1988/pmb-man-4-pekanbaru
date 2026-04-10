@@ -15,7 +15,7 @@ class CalonSiswa extends Model
         'user_id', 'nama_lengkap', 'nisn', 'nik', 'no_kk',
         'no_hp_siswa', 'no_hp_ortu', 'status', 'catatan_panitia',
         'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
-        'anak_ke', 'dari_bersaudara', 'status_dalam_keluarga',
+        'anak_ke', 'dari_bersaudara', 'status_dalam_keluarga', 'foto_profil',
         'alamat_siswa', 'rt_rw_siswa', 'kode_pos_siswa', 'kota_siswa',
         'bahasa_harian', 'status_rumah', 'jarak_rumah_km', 'transportasi',
         'jurusan_pilihan', 'asal_sekolah', 'alamat_asal_sekolah', 'npsn', 'nsm',
