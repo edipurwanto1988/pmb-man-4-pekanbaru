@@ -106,6 +106,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('pengaturan-pmb', [\App\Http\Controllers\Admin\PengaturanPmbController::class, 'index'])->name('pengaturan-pmb.index');
     Route::post('pengaturan-pmb', [\App\Http\Controllers\Admin\PengaturanPmbController::class, 'update'])->name('pengaturan-pmb.update');
 
+    // Kelola Tahun PMB & Gelombang
+    Route::resource('tahun-pmb', \App\Http\Controllers\Admin\TahunPmbController::class)->except(['create', 'show', 'edit']);
+    Route::resource('gelombang', \App\Http\Controllers\Admin\GelombangController::class)->except(['create', 'show', 'edit']);
+
     // Role Management
     Route::resource('roles', RoleController::class);
 
