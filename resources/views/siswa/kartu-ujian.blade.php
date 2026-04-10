@@ -131,8 +131,20 @@
 <body>
     <div class="card">
         <div class="header">
-            <h1>KARTU UJIAN</h1>
-            <h2>PENERIMAAN MURID BARU MAN 4 KOTA PEKANBARU</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 80px; vertical-align: middle; padding: 10px;">
+                        <img src="{{ public_path('logo_man.png') }}" alt="Logo MAN 4" style="width: 70px; height: auto;">
+                    </td>
+                    <td style="vertical-align: middle; text-align: center;">
+                        <h1>KEMENTERIAN AGAMA REPUBLIK INDONESIA</h1>
+                        <h2>KANTOR KEMENTERIAN AGAMA KOTA PEKANBARU</h2>
+                        <h2>MADRASAH ALIYAH NEGERI 4 KOTA PEKANBARU</h2>
+                        <h2>TERAKREDITASI A</h2>
+                        <h2>JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="content">
@@ -249,7 +261,7 @@
 
         <div class="footer">
             <p>Dicetak pada: {{ $tanggal_cetak }}</p>
-            <p>MAN 4 Kota Pekanbaru - Jl. Tuanku Tambusai No. 12, Pekanbaru</p>
+            <p>MAN 4 Kota Pekanbaru - JL. YOS SUDARSO KM. 15 PEKANBARU</p>
         </div>
     </div>
 </body>
