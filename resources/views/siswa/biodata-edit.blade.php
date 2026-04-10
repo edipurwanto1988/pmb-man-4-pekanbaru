@@ -42,22 +42,31 @@
 
             {{-- Foto Profil --}}
             <div style="background:#fff; border-radius:10px; padding:20px; margin-bottom:20px; border:1px solid #d1fae5;">
-                <h3 style="font-size:16px; font-weight:700; color:#14532d; margin:0 0 15px;">📷 Foto Profil (Ukuran 3:4)</h3>
-                <div style="display:flex; gap:20px; align-items:flex-start;">
-                    <div style="flex:1;">
-                        <div id="foto-preview" style="margin-bottom:15px;">
-                            @if($calonSiswa->foto_profil)
-                                <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" alt="Foto Profil" style="width:120px; height:160px; object-fit:cover; border-radius:8px; border:2px solid #d1fae5;">
+                <h3 style="font-size:16px; font-weight:700; color:#14532d; margin:0 0 15px;">📷 Foto Profil (Untuk Kartu Ujian, Ukuran 3:4)</h3>
+                
+                <form action="{{ route('biodata.pas-foto') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+                        {{-- Preview --}}
+                        <div style="width:120px; height:160px; background:#f3f4f6; border:2px dashed #d1d5db; border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                            @if($calonSiswa->pas_foto)
+                                <img src="{{ Storage::url($calonSiswa->pas_foto) }}" alt="Pas Foto" style="width:100%; height:100%; object-fit:cover;">
+                            @else
+                                <span style="font-size:12px; color:#9ca3af; text-align:center;">Belum ada foto</span>
                             @endif
                         </div>
-                        <x-input-label for="foto_profil" :value="__('Upload Foto Baru')" />
-                        <input type="file" id="foto_profil" name="foto_profil" accept="image/*" style="border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; width:100%; margin-top:4px; font-size:14px;">
-                        @error('foto_profil')
-                            <p style="color:#ef4444; font-size:12px; margin-top:5px;">{{ $message }}</p>
-                        @enderror
-                        <p style="color:#6b7280; font-size:12px; margin-top:8px;">Format: JPG, PNG, JPEG. Maksimal: 2MB.</p>
+                        
+                        <div style="flex:1;">
+                            <label for="pas_foto" style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:5px;">Pilih File Foto Baru</label>
+                            <input type="file" id="pas_foto" name="pas_foto" accept="image/jpeg,image/png,image/jpg" style="border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; width:100%; font-size:14px;" required>
+                            <p style="color:#6b7280; font-size:12px; margin-top:8px;">Format yang didukung: JPG, JPEG, PNG. Ukuran maksimal: 2 MB.</p>
+                            
+                            <button type="submit" style="margin-top:15px; background:#16a34a; color:#fff; padding:8px 16px; border-radius:6px; border:none; font-weight:600; cursor:pointer;">
+                                Upload / Simpan Foto
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
 
             {{-- Loading indicator for photo upload --}}

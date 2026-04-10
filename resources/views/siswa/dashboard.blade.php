@@ -199,6 +199,20 @@
                         </div>
                     </div>
                 </a>
+
+                @if(in_array($calonSiswa->status, ['lulus_administrasi', 'lulus_tes', 'lulus_pnbm', 'daftar_ulang', 'resmi_terdaftar']))
+                <a href="{{ route('siswa.kartu-ujian') }}" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block" style="border: 2px solid #3b82f6;">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 rounded-md p-3" style="background-color:#ef4444;">
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4-4m-4 4l-4-4m4 4V14"/></svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="font-semibold text-gray-900 dark:text-gray-100">Cetak Kartu Ujian</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Download Kartu (PDF)</p>
+                        </div>
+                    </div>
+                </a>
+                @endif
             </div>
             @else
                 <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 text-center">
