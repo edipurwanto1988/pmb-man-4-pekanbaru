@@ -64,6 +64,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('pendaftar/{id}/status', [PendaftarController::class, 'updateStatus'])->name('pendaftar.updateStatus');
     Route::put('pendaftar/berkas/{berkasId}', [PendaftarController::class, 'updateBerkas'])->name('pendaftar.updateBerkas');
     Route::delete('pendaftar/{id}', [PendaftarController::class, 'destroy'])->name('pendaftar.destroy');
+    Route::put('pendaftar/{id}/password', [PendaftarController::class, 'updatePassword'])->name('pendaftar.updatePassword');
 
     // Kelola Arsip
     Route::get('arsip', [PendaftarController::class, 'arsip'])->name('arsip.index');

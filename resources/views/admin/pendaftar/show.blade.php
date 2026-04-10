@@ -72,11 +72,17 @@
 
 
             {{-- Tombol buka modal --}}
-            <div class="mb-6">
+            <div class="mb-6 flex gap-4">
                 <button onclick="document.getElementById('modal-biodata').classList.remove('hidden')"
                     style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#16a34a; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px;">
                     <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     Lihat Biodata Lengkap
+                </button>
+                
+                <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'password-modal')"
+                    style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#4f46e5; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px;">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                    Ubah Password
                 </button>
             </div>
 
@@ -471,4 +477,38 @@
 
         </div>
     </div>
+
+    <!-- Password Modal -->
+    <x-modal name="password-modal" focusable>
+        <form method="POST" action="{{ route('admin.pendaftar.updatePassword', $pendaftar->id) }}" class="p-6">
+            @csrf
+            @method('PUT')
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                Ubah Password Peserta
+            </h2>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                Ubah password login untuk akun peserta <strong>{{ $pendaftar->nama_lengkap }}</strong>.
+            </p>
+
+            <div class="mt-6">
+                <x-input-label for="password" value="Password Baru" />
+                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" required />
+            </div>
+
+            <div class="mt-6">
+                <x-input-label for="password_confirmation" value="Konfirmasi Password Baru" />
+                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" required />
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    Batal
+                </x-secondary-button>
+                <x-primary-button class="ml-3">
+                    Simpan Password
+                </x-primary-button>
+            </div>
+        </form>
+    </x-modal>
+
 </x-app-layout>

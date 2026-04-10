@@ -136,4 +136,21 @@ class PendaftarController extends Controller
 
         return view('admin.arsip.index', compact('pendaftars', 'tahunPmbs', 'gelombangs'));
     }
+    public function updatePassword(Request $request, string $id)
+    {
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $pendaftar = CalonSiswa::with('user')->findOrFail($id);
+        
+        if ($pendaftar->user) {
+            $pendaftar->user->update([
+                'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+            ]);
+            return redirect()->back()->with('success', 'Password peserta berhasil diubah.');
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Peserta ini belum memiliki akun user.']);
+    }
 }
