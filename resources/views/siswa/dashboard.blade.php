@@ -14,6 +14,20 @@
                 </div>
             </div>
 
+            <!-- WhatsApp Info -->
+            <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 rounded-lg flex items-start gap-4 shadow-sm">
+                <div class="bg-green-500 rounded-full p-2 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-blue-800 dark:text-blue-200">Grup WhatsApp Peserta</h4>
+                    <p class="mb-2 text-sm text-blue-700 dark:text-blue-300">Silakan bergabung ke grup berikut untuk mendapatkan informasi terbaru terkait pendaftaran:</p>
+                    <a href="https://chat.whatsapp.com/JZOQJSwb9K5ASII0Cb9Ocr?mode=gi_t" target="_blank" class="inline-flex items-center gap-1 font-semibold text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md text-sm transition transition-colors">
+                        Gabung Grup WhatsApp
+                    </a>
+                </div>
+            </div>
+
             @if($calonSiswa)
             <!-- Status -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
