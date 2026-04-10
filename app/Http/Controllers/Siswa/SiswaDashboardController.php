@@ -153,10 +153,23 @@ class SiswaDashboardController extends Controller
         ]);
 
         // Handle photo upload
+        \Log::info('Foto upload check - hasFile: ' . ($request->hasFile('foto_profil') ? 'yes' : 'no'));
+        \Log::info('All files: ' . json_encode($request->allFiles()));
+        
         if ($request->hasFile('foto_profil')) {
             $file = $request->file('foto_profil');
+            \Log::info('File info: ' . json_encode([
+                'originalName' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+                'mimeType' => $file->getMimeType(),
+                'isValid' => $file->isValid(),
+                'error' => $file->getError()
+            ]));
+            
             $filename = 'foto_profil_' . time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('foto_profil', $filename, 'public');
+            $path = $file->storeAs('foto_profil', $filename, 'public');
+            \Log::info('File stored at: ' . $path);
+            
             $validated['foto_profil'] = 'foto_profil/' . $filename;
         }
 
