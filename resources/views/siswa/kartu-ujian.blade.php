@@ -20,7 +20,7 @@
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            border: 3px solid #1e40af;
+            border: 1px solid #00030b;
             border-radius: 10px;
             overflow: hidden;
         }
@@ -140,9 +140,20 @@
 
             <div class="photo-section">
                 @if($calonSiswa->foto_profil)
-                    <div style="width: 120px; height: 150px; border: 2px solid #1e40af; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                        <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
+                    @php
+                        $imagePath = storage_path('app/public/' . $calonSiswa->foto_profil);
+                        $imageData = file_exists($imagePath) ? base64_encode(file_get_contents($imagePath)) : null;
+                        $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+                    @endphp
+                    @if($imageData)
+                        <div style="width: 120px; height: 150px; border: 2px solid #1e40af; border-radius: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <img src="data:image/{{ $imageType }};base64,{{ $imageData }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    @else
+                        <div class="photo-placeholder">
+                            FOTO 3x4<br>(Tempel Foto)
+                        </div>
+                    @endif
                 @else
                     <div class="photo-placeholder">
                         FOTO 3x4<br>(Tempel Foto)
