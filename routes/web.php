@@ -143,4 +143,7 @@ Route::middleware(['auth', 'role:calon_siswa'])->prefix('siswa')->name('siswa.')
     // Edit Biodata
     Route::get('/biodata', [SiswaDashboardController::class, 'editBiodata'])->name('biodata.edit');
     Route::put('/biodata', [SiswaDashboardController::class, 'updateBiodata'])->name('biodata.update');
+
+    // Kartu Ujian
+    Route::get('/kartu-ujian', [SiswaDashboardController::class, 'kartuUjian'])->name('kartu-ujian');
 });

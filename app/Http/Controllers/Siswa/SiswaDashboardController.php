@@ -8,6 +8,7 @@ use App\Models\Jadwal;
 use App\Models\HasilTes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class SiswaDashboardController extends Controller
 {
@@ -156,5 +157,26 @@ class SiswaDashboardController extends Controller
 
         return redirect()->route('siswa.biodata.edit')
             ->with('success', 'Biodata berhasil diperbarui!');
+    }
+
+    public function kartuUjian()
+    {
+        $user = Auth::user();
+        $calonSiswa = CalonSiswa::where('user_id', $user->id)->firstOrFail();
+
+        // Check if student is eligible for exam card
+        $eligibleStatuses = ['lulus_administrasi', 'lulus_tes', 'lulus_pnbm', 'daftar_ulang', 'resmi_terdaftar'];
+        if (!in_array($calonSiswa->status, $eligibleStatuses)) {
+            return redirect()->route('siswa.dashboard')
+                ->with('error', 'Kartu ujian hanya tersedia untuk peserta yang telah lulus verifikasi administrasi.');
+        }
+
+        $data = [
+            'calonSiswa' => $calonSiswa,
+            'tanggal_cetak' => now()->format('d F Y'),
+        ];
+
+        $pdf = PDF::loadView('siswa.kartu-ujian', $data);
+        return $pdf->download('kartu-ujian-' . $calonSiswa->nisn . '.pdf');
     }
 }
