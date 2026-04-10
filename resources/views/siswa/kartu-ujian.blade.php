@@ -59,10 +59,11 @@
         }
         .info-item {
             display: flex;
+            align-items: center;
         }
         .info-label {
             font-weight: bold;
-            width: 150px;
+            min-width: 150px;
             color: #374151;
         }
         .info-value {
