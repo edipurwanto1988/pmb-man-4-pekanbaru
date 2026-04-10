@@ -138,7 +138,8 @@
         <div class="content">
             <div class="title">KARTU PESERTA UJIAN</div>
 
-            <div class="photo-section">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px;">
+                <div class="photo-section">
                 @if($calonSiswa->foto_profil)
                     @php
                         $imagePath = storage_path('app/public/' . $calonSiswa->foto_profil);
@@ -203,6 +204,7 @@
                     <td class="info-value">{{ $calonSiswa->jurusan_pilihan ?? '-' }}</td>
                 </tr>
             </table>
+            </div>
 
             <div class="status">
                 STATUS: {{ strtoupper(str_replace('_', ' ', $calonSiswa->status)) }}
