@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Exports\CalonSiswaExport;
 use App\Models\CalonSiswa;
 use App\Models\Berkas;
+use App\Models\TahunPmb;
+use App\Models\Gelombang;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -13,7 +15,7 @@ class PendaftarController extends Controller
 {
     public function index(Request $request)
     {
-        $query = CalonSiswa::with('user');
+        $query = CalonSiswa::with('user')->where('is_arsip', false);
 
         // Filter by status
         if ($request->filled('status')) {
@@ -30,8 +32,10 @@ class PendaftarController extends Controller
         }
 
         $pendaftars = $query->latest()->paginate(15);
+        $tahunPmbs = TahunPmb::where('is_active', true)->get();
+        $gelombangs = Gelombang::where('is_active', true)->get();
 
-        return view('admin.pendaftar.index', compact('pendaftars'));
+        return view('admin.pendaftar.index', compact('pendaftars', 'tahunPmbs', 'gelombangs'));
     }
 
     public function show(string $id)
@@ -88,5 +92,48 @@ class PendaftarController extends Controller
         }
 
         return redirect()->route('admin.pendaftar.index')->with('success', 'Data pendaftar berhasil dihapus.');
+    }
+
+    public function archive(Request $request)
+    {
+        $request->validate([
+            'pendaftar_ids' => 'required|array',
+            'pendaftar_ids.*' => 'exists:calon_siswa,id',
+            'tahun_pmb_id' => 'required|exists:tahun_pmb,id',
+            'gelombang_id' => 'required|exists:gelombang,id',
+        ]);
+
+        CalonSiswa::whereIn('id', $request->pendaftar_ids)->update([
+            'tahun_pmb_id' => $request->tahun_pmb_id,
+            'gelombang_id' => $request->gelombang_id,
+            'is_arsip' => true,
+        ]);
+
+        return redirect()->back()->with('success', count($request->pendaftar_ids) . ' data pendaftar berhasil diarsipkan.');
+    }
+
+    public function arsip(Request $request)
+    {
+        $query = CalonSiswa::with(['user', 'tahunPmb', 'gelombang'])->where('is_arsip', true);
+
+        // Filter by tahun PMB
+        if ($request->filled('tahun_pmb_id')) {
+            $query->where('tahun_pmb_id', $request->tahun_pmb_id);
+        }
+
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_lengkap', 'like', "%{$search}%")
+                  ->orWhere('nisn', 'like', "%{$search}%");
+            });
+        }
+
+        $pendaftars = $query->latest('updated_at')->paginate(15);
+        $tahunPmbs = TahunPmb::all();
+        $gelombangs = Gelombang::all();
+
+        return view('admin.arsip.index', compact('pendaftars', 'tahunPmbs', 'gelombangs'));
     }
 }

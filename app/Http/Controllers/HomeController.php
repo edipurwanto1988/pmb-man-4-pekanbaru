@@ -13,6 +13,8 @@ class HomeController extends Controller
             ->orderBy('urutan')
             ->get();
             
-        return view('landing.index', compact('sections'));
+        $pengaturanPmb = \App\Models\PengaturanPmb::first();
+
+        return view('landing.index', compact('sections', 'pengaturanPmb'));
     }
 }

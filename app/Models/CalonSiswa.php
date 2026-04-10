@@ -33,11 +33,22 @@ class CalonSiswa extends Model
         'nama_wali', 'nik_wali', 'tempat_lahir_wali', 'tanggal_lahir_wali',
         'pendidikan_wali', 'pekerjaan_wali', 'penghasilan_wali',
         'alamat_wali', 'rt_rw_wali', 'kode_pos_wali', 'kota_wali', 'no_hp_wali',
+        'tahun_pmb_id', 'gelombang_id', 'is_arsip',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tahunPmb()
+    {
+        return $this->belongsTo(TahunPmb::class, 'tahun_pmb_id');
+    }
+
+    public function gelombang()
+    {
+        return $this->belongsTo(Gelombang::class, 'gelombang_id');
     }
 
     public function berkas()

@@ -20,9 +20,10 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
-        return view('auth.register');
+        $pengaturanPmb = \App\Models\PengaturanPmb::first();
+        return view('auth.register', compact('pengaturanPmb'));
     }
 
     /**

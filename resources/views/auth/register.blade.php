@@ -3,12 +3,22 @@
 @section('content')
 <div style="min-height:100vh; background:#f0fdf4; padding: 40px 16px;">
 
-    {{-- Header --}}
     <div style="text-align:center; margin-bottom:32px;">
         <img src="{{ asset('logo_man.png') }}" style="height:60px; margin:0 auto 12px; display:block;">
         <h1 style="font-size:22px; font-weight:800; color:#14532d;">Formulir Pendaftaran PMBM</h1>
         <p style="color:#6b7280; font-size:14px;">MAN 4 Kota Pekanbaru — Tahun Pelajaran 2026/2027</p>
     </div>
+
+    @if(isset($pengaturanPmb) && $pengaturanPmb->is_tutup)
+    <div style="max-width:720px; margin:0 auto 28px; background:#fef2f2; border:1px solid #fca5a5; border-radius:12px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
+        <div style="text-align:center; margin-bottom:16px;">
+            <span style="background:#ef4444; color:white; font-weight:700; padding:6px 16px; border-radius:99px; font-size:14px; letter-spacing:0.5px;">PENDAFTARAN DITUTUP</span>
+        </div>
+        <div style="text-align:center; color:#7f1d1d; font-size:16px;">
+            {!! $pengaturanPmb->pesan_tutup !!}
+        </div>
+    </div>
+    @endif
 
     {{-- Notifikasi Error Global --}}
     @if($errors->any())
@@ -39,6 +49,7 @@
 
     <form method="POST" action="{{ route('register') }}" id="reg-form">
         @csrf
+        <fieldset {{ isset($pengaturanPmb) && $pengaturanPmb->is_tutup ? 'disabled' : '' }} style="border:none; padding:0; margin:0;">
 
         <div style="max-width:720px; margin:0 auto;">
 
@@ -353,6 +364,8 @@
             </div>
 
         </div>
+
+        </fieldset>
     </form>
 </div>
 

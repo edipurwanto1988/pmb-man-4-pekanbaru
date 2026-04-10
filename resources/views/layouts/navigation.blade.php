@@ -68,6 +68,8 @@
                                         <a href="{{ route('admin.landing-page.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Landing Page</a>
                                         <a href="{{ route('admin.syarat.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Syarat Daftar Ulang</a>
                                         <a href="{{ route('admin.pengaturan-berkas.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 {{ request()->routeIs('admin.pengaturan-berkas.*') ? 'bg-gray-100 dark:bg-gray-600 font-semibold' : '' }}">Pengaturan Berkas</a>
+                                        <a href="{{ route('admin.pengaturan-pmb.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 {{ request()->routeIs('admin.pengaturan-pmb.*') ? 'bg-gray-100 dark:bg-gray-600 font-semibold' : '' }}">Tutup PMB</a>
+                                        <a href="{{ route('admin.arsip.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 {{ request()->routeIs('admin.arsip.*') ? 'bg-gray-100 dark:bg-gray-600 font-semibold' : '' }}">Data Arsip</a>
                                         <a href="{{ route('admin.roles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Roles & Permission</a>
                                     </div>
                                 </div>
@@ -177,6 +179,12 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.pengaturan-berkas.index')" :active="request()->routeIs('admin.pengaturan-berkas.*')">
                     {{ __('Pengaturan Berkas') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pengaturan-pmb.index')" :active="request()->routeIs('admin.pengaturan-pmb.*')">
+                    {{ __('Tutup PMB') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.arsip.index')" :active="request()->routeIs('admin.arsip.*')">
+                    {{ __('Data Arsip') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                     {{ __('Roles & Permission') }}

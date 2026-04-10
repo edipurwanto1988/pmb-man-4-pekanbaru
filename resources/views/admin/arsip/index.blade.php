@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Kelola Pendaftar</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Data Arsip Pendaftar</h2>
         </div>
     </x-slot>
 
@@ -34,52 +34,33 @@
                                 <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Nama atau NISN..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             </div>
                             <div>
-                                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
-                                <select name="status" id="status" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                    <option value="">Semua Status</option>
-                                    <option value="terdaftar" {{ request('status') == 'terdaftar' ? 'selected' : '' }}>Terdaftar</option>
-                                    <option value="menunggu_verifikasi" {{ request('status') == 'menunggu_verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
-                                    <option value="lulus_administrasi" {{ request('status') == 'lulus_administrasi' ? 'selected' : '' }}>Lulus Administrasi</option>
-                                    <option value="tidak_lulus_administrasi" {{ request('status') == 'tidak_lulus_administrasi' ? 'selected' : '' }}>Tidak Lulus Administrasi</option>
-                                    <option value="lulus_tes" {{ request('status') == 'lulus_tes' ? 'selected' : '' }}>Lulus Tes</option>
-                                    <option value="tidak_lulus_tes" {{ request('status') == 'tidak_lulus_tes' ? 'selected' : '' }}>Tidak Lulus Tes</option>
-                                    <option value="lulus_pnbm" {{ request('status') == 'lulus_pnbm' ? 'selected' : '' }}>Lulus PMB</option>
-                                    <option value="daftar_ulang" {{ request('status') == 'daftar_ulang' ? 'selected' : '' }}>Daftar Ulang</option>
-                                    <option value="resmi_terdaftar" {{ request('status') == 'resmi_terdaftar' ? 'selected' : '' }}>Resmi Terdaftar</option>
+                                <label for="tahun_pmb_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tahun PMB</label>
+                                <select name="tahun_pmb_id" id="tahun_pmb_id" class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">Semua Tahun</option>
+                                    @foreach($tahunPmbs as $t)
+                                        <option value="{{ $t->id }}" {{ request('tahun_pmb_id') == $t->id ? 'selected' : '' }}>{{ $t->nama }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <x-primary-button>Filter</x-primary-button>
-                            @if(request()->hasAny(['search', 'status']))
-                                <a href="{{ route('admin.pendaftar.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-400">Reset</a>
+                            @if(request()->hasAny(['search', 'tahun_pmb_id']))
+                                <a href="{{ route('admin.arsip.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-400">Reset</a>
                             @endif
                         </form>
-                        <a href="{{ route('admin.pendaftar.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
-                            <i class="ri-file-excel-2-line mr-2"></i> Export Excel
-                        </a>
                     </div>
                 </div>
             </div>
 
             <!-- Table -->
-            <form action="{{ route('admin.pendaftar.archive') }}" method="POST" id="archiveForm">
-            @csrf
-            
-            <div class="flex justify-end mb-4">
-                <button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'archive-modal')" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 text-white active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    <i class="ri-archive-line mr-2"></i> Arsipkan Data Terpilih
-                </button>
-            </div>
-
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th class="px-4 py-3 text-left w-12"><input type="checkbox" id="checkAll" class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500"></th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">No</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tahun & Gel.</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">NISN</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tahap</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tgl Daftar</th>
@@ -89,8 +70,8 @@
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             @forelse($pendaftars as $index => $p)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 group">
-                                    <td class="px-4 py-4 whitespace-nowrap"><input type="checkbox" name="pendaftar_ids[]" value="{{ $p->id }}" class="pendaftar-checkbox rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500"></td>
                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pendaftars->firstItem() + $index }}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 font-semibold">{{ $p->tahunPmb->nama ?? '-' }}<br><span class="text-xs text-gray-500">{{ $p->gelombang->nama ?? '-' }}</span></td>
                                     <td class="px-4 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-bold">
@@ -101,8 +82,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $p->nisn }}</td>
-                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $p->user->email ?? '-' }}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $p->nisn }}<br><span class="text-xs">{{ $p->user->email ?? '-' }}</span></td>
                                     <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                         @php
                                             $tahap = '';
@@ -162,7 +142,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada pendaftar.</td>
+                                    <td colspan="8" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada data arsip pendaftar.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -172,63 +152,6 @@
                     {{ $pendaftars->withQueryString()->links() }}
                 </div>
             </div>
-            
-            <!-- Archive Modal -->
-            <x-modal name="archive-modal" focusable>
-                <div class="p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Arsipkan Pendaftar Terpilih
-                    </h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Silakan pilih Tahun PMB dan Gelombang untuk data yang akan diarsipkan. Data yang diarsipkan tidak akan muncul lagi di daftar pendaftar aktif.
-                    </p>
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tahun PMB</label>
-                        <select name="tahun_pmb_id" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                            <option value="">-- Pilih Tahun PMB --</option>
-                            @foreach($tahunPmbs as $tahun)
-                                <option value="{{ $tahun->id }}">{{ $tahun->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gelombang</label>
-                        <select name="gelombang_id" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                            <option value="">-- Pilih Gelombang --</option>
-                            @foreach($gelombangs as $gelombang)
-                                <option value="{{ $gelombang->id }}">{{ $gelombang->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mt-6 flex justify-end">
-                        <x-secondary-button x-on:click="$dispatch('close')">
-                            Batal
-                        </x-secondary-button>
-                        <x-primary-button class="ml-3">
-                            Simpan Arsip
-                        </x-primary-button>
-                    </div>
-                </div>
-            </x-modal>
-            
-            </form>
-
         </div>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkAll = document.getElementById('checkAll');
-            const checkboxes = document.querySelectorAll('.pendaftar-checkbox');
-            
-            if(checkAll) {
-                checkAll.addEventListener('change', function() {
-                    checkboxes.forEach(cb => cb.checked = checkAll.checked);
-                });
-            }
-        });
-    </script>
 </x-app-layout>

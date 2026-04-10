@@ -58,11 +58,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Kelola Pendaftar
     Route::get('pendaftar', [PendaftarController::class, 'index'])->name('pendaftar.index');
+    Route::post('pendaftar/archive', [PendaftarController::class, 'archive'])->name('pendaftar.archive');
     Route::get('pendaftar/export', [PendaftarController::class, 'export'])->name('pendaftar.export');
     Route::get('pendaftar/{id}', [PendaftarController::class, 'show'])->name('pendaftar.show');
     Route::put('pendaftar/{id}/status', [PendaftarController::class, 'updateStatus'])->name('pendaftar.updateStatus');
     Route::put('pendaftar/berkas/{berkasId}', [PendaftarController::class, 'updateBerkas'])->name('pendaftar.updateBerkas');
     Route::delete('pendaftar/{id}', [PendaftarController::class, 'destroy'])->name('pendaftar.destroy');
+
+    // Kelola Arsip
+    Route::get('arsip', [PendaftarController::class, 'arsip'])->name('arsip.index');
 
     // Verifikasi Berkas
     Route::get('verifikasi', [VerifikasiController::class, 'index'])->name('verifikasi.index');
@@ -97,6 +101,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Pengaturan Berkas Pendaftaran
     Route::get('pengaturan-berkas', [PengaturanBerkasController::class, 'index'])->name('pengaturan-berkas.index');
     Route::put('pengaturan-berkas/{id}', [PengaturanBerkasController::class, 'update'])->name('pengaturan-berkas.update');
+
+    // Pengaturan PMB
+    Route::get('pengaturan-pmb', [\App\Http\Controllers\Admin\PengaturanPmbController::class, 'index'])->name('pengaturan-pmb.index');
+    Route::post('pengaturan-pmb', [\App\Http\Controllers\Admin\PengaturanPmbController::class, 'update'])->name('pengaturan-pmb.update');
 
     // Role Management
     Route::resource('roles', RoleController::class);
