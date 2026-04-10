@@ -60,6 +60,25 @@
                 </div>
             </div>
 
+            {{-- Loading indicator for photo upload --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const fileInput = document.getElementById('foto_profil');
+                    if (fileInput) {
+                        fileInput.addEventListener('change', function(e) {
+                            if (this.files && this.files[0]) {
+                                // Show loading state
+                                const loadingDiv = document.createElement('div');
+                                loadingDiv.id = 'upload-loading';
+                                loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
+                                loadingDiv.innerHTML = '<div style="background:white;padding:20px 40px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.2);"><p style="margin:0;font-size:16px;">📤 Mengupload foto...</p></div>';
+                                document.body.appendChild(loadingDiv);
+                            }
+                        });
+                    }
+                });
+            </script>
+
             <form method="POST" action="{{ route('siswa.biodata.update') }}" id="biodata-form">
                 @csrf
                 @method('PUT')
