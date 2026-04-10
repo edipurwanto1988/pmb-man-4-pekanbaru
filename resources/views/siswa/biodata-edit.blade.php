@@ -45,11 +45,11 @@
                 <h3 style="font-size:16px; font-weight:700; color:#14532d; margin:0 0 15px;">📷 Foto Profil (Ukuran 3:4)</h3>
                 <div style="display:flex; gap:20px; align-items:flex-start;">
                     <div style="flex:1;">
-                        @if($calonSiswa->foto_profil)
-                            <div style="margin-bottom:15px;">
+                        <div id="foto-preview" style="margin-bottom:15px;">
+                            @if($calonSiswa->foto_profil)
                                 <img src="{{ asset('storage/' . $calonSiswa->foto_profil) }}" alt="Foto Profil" style="width:120px; height:160px; object-fit:cover; border-radius:8px; border:2px solid #d1fae5;">
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                         <x-input-label for="foto_profil" :value="__('Upload Foto Baru')" />
                         <input type="file" id="foto_profil" name="foto_profil" accept="image/*" style="border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; width:100%; margin-top:4px; font-size:14px;">
                         @error('foto_profil')
@@ -64,22 +64,44 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const fileInput = document.getElementById('foto_profil');
+                    const form = document.getElementById('biodata-form');
+                    
+                    // Remove loading overlay if it exists (from previous page load)
+                    const existingLoading = document.getElementById('upload-loading');
+                    if (existingLoading) {
+                        existingLoading.remove();
+                    }
+                    
                     if (fileInput) {
+                        // Show preview when file is selected
                         fileInput.addEventListener('change', function(e) {
                             if (this.files && this.files[0]) {
-                                // Show loading state
-                                const loadingDiv = document.createElement('div');
-                                loadingDiv.id = 'upload-loading';
-                                loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
-                                loadingDiv.innerHTML = '<div style="background:white;padding:20px 40px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.2);"><p style="margin:0;font-size:16px;">📤 Mengupload foto...</p></div>';
-                                document.body.appendChild(loadingDiv);
+                                const previewDiv = document.getElementById('foto-preview');
+                                if (previewDiv) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        previewDiv.innerHTML = '<img src="' + e.target.result + '" alt="Preview" style="width:120px; height:160px; object-fit:cover; border-radius:8px; border:2px solid #d1fae5;">';
+                                    };
+                                    reader.readAsDataURL(this.files[0]);
+                                }
                             }
+                        });
+                    }
+                    
+                    if (form) {
+                        // Show loading when form is submitted
+                        form.addEventListener('submit', function(e) {
+                            const loadingDiv = document.createElement('div');
+                            loadingDiv.id = 'upload-loading';
+                            loadingDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
+                            loadingDiv.innerHTML = '<div style="background:white;padding:20px 40px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.2);"><p style="margin:0;font-size:16px;">📤 Mengupload foto...</p></div>';
+                            document.body.appendChild(loadingDiv);
                         });
                     }
                 });
             </script>
 
-            <form method="POST" action="{{ route('siswa.biodata.update') }}" id="biodata-form">
+            <form method="POST" action="{{ route('siswa.biodata.update') }}" id="biodata-form" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
