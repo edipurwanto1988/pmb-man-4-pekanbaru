@@ -51,20 +51,23 @@
             margin-bottom: 30px;
             text-decoration: underline;
         }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
         }
-        .info-item {
-            display: flex;
-            align-items: center;
+        .info-table td {
+            padding: 8px 5px;
+            vertical-align: middle;
         }
         .info-label {
             font-weight: bold;
-            min-width: 150px;
+            width: 180px;
             color: #374151;
+        }
+        .info-separator {
+            width: 10px;
+            text-align: center;
         }
         .info-value {
             color: #1f2937;
@@ -141,40 +144,48 @@
                 </div>
             </div>
 
-            <div class="info-grid">
-                <div class="info-item">
-                    <span class="info-label">No. Pendaftaran:</span>
-                    <span class="info-value">{{ $calonSiswa->id }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">NISN:</span>
-                    <span class="info-value">{{ $calonSiswa->nisn }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Nama Lengkap:</span>
-                    <span class="info-value">{{ $calonSiswa->nama_lengkap }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Tempat, Tgl Lahir:</span>
-                    <span class="info-value">{{ $calonSiswa->tempat_lahir ?? '-' }}, {{ $calonSiswa->tanggal_lahir ? \Carbon\Carbon::parse($calonSiswa->tanggal_lahir)->format('d/m/Y') : '-' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Jenis Kelamin:</span>
-                    <span class="info-value">{{ $calonSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">No. HP/WA:</span>
-                    <span class="info-value">{{ $calonSiswa->no_hp_siswa }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Asal Sekolah:</span>
-                    <span class="info-value">{{ $calonSiswa->asal_sekolah ?? '-' }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Jurusan Pilihan:</span>
-                    <span class="info-value">{{ $calonSiswa->jurusan_pilihan ?? '-' }}</span>
-                </div>
-            </div>
+            <table class="info-table">
+                <tr>
+                    <td class="info-label">No. Pendaftaran</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->id }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">NISN</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->nisn }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">Nama Lengkap</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->nama_lengkap }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">Tempat, Tgl Lahir</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->tempat_lahir ?? '-' }}, {{ $calonSiswa->tanggal_lahir ? \Carbon\Carbon::parse($calonSiswa->tanggal_lahir)->format('d/m/Y') : '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">Jenis Kelamin</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">No. HP/WA</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->no_hp_siswa }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">Asal Sekolah</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->asal_sekolah ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="info-label">Jurusan Pilihan</td>
+                    <td class="info-separator">:</td>
+                    <td class="info-value">{{ $calonSiswa->jurusan_pilihan ?? '-' }}</td>
+                </tr>
+            </table>
 
             <div class="status">
                 STATUS: {{ strtoupper(str_replace('_', ' ', $calonSiswa->status)) }}
