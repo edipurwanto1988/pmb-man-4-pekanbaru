@@ -352,7 +352,7 @@
 
                 <div style="display:flex; justify-content:space-between;">
                     <button type="button" onclick="prevStep(4)" style="background:#6b7280; color:#fff; padding:10px 28px; border-radius:8px; border:none; font-weight:600; cursor:pointer;">&larr; Kembali</button>
-                    <button type="submit" style="background:#16a34a; color:#fff; padding:12px 36px; border-radius:8px; border:none; font-weight:700; cursor:pointer; font-size:16px;">
+                    <button type="submit" onclick="return validateStep(4)" style="background:#16a34a; color:#fff; padding:12px 36px; border-radius:8px; border:none; font-weight:700; cursor:pointer; font-size:16px;">
                         ✅ Daftar Sekarang
                     </button>
                 </div>
@@ -378,7 +378,59 @@
     const totalSteps = 4;
     const stepColors = ['#16a34a','#2563eb','#db2777','#d97706'];
 
+    // Required fields per step
+    const requiredFields = {
+        1: ['nama_lengkap', 'nisn', 'no_hp_siswa'],
+        2: [],
+        3: [],
+        4: ['email', 'password', 'password_confirmation']
+    };
+
+    function validateStep(step) {
+        const fields = requiredFields[step] || [];
+        let isValid = true;
+        let firstErrorField = null;
+
+        fields.forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            if (field && !field.value.trim()) {
+                isValid = false;
+                if (!firstErrorField) firstErrorField = field;
+                
+                // Show warning message
+                let warningDiv = field.parentElement.querySelector('.field-warning');
+                if (!warningDiv) {
+                    warningDiv = document.createElement('div');
+                    warningDiv.className = 'field-warning';
+                    warningDiv.style.color = '#ef4444';
+                    warningDiv.style.fontSize = '12px';
+                    warningDiv.style.marginTop = '4px';
+                    field.parentElement.appendChild(warningDiv);
+                }
+                warningDiv.textContent = '⚠️ Field ini wajib diisi';
+                field.style.borderColor = '#ef4444';
+            } else if (field) {
+                // Remove warning if field is filled
+                let warningDiv = field.parentElement.querySelector('.field-warning');
+                if (warningDiv) {
+                    warningDiv.remove();
+                }
+                field.style.borderColor = '#d1d5db';
+            }
+        });
+
+        if (!isValid && firstErrorField) {
+            firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
+            firstErrorField.focus();
+        }
+
+        return isValid;
+    }
+
     function nextStep(current) {
+        if (!validateStep(current)) {
+            return;
+        }
         document.getElementById('step-' + current).style.display = 'none';
         document.getElementById('step-' + (current + 1)).style.display = 'block';
         updateProgress(current + 1);
