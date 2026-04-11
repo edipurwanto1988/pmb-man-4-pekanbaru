@@ -79,6 +79,12 @@
                     Lihat Biodata Lengkap
                 </button>
                 
+                <a href="{{ route('admin.pendaftar.kartu-ujian', $pendaftar->id) }}"
+                    style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#ef4444; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px; text-decoration:none;">
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Cetak Kartu Ujian
+                </a>
+                
                 <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'password-modal')"
                     style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#4f46e5; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px;">
                     <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>

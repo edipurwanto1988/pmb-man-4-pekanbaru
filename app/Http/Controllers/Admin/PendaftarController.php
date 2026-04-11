@@ -153,4 +153,17 @@ class PendaftarController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Peserta ini belum memiliki akun user.']);
     }
+
+    public function kartuUjian(string $id)
+    {
+        $calonSiswa = CalonSiswa::findOrFail($id);
+
+        $data = [
+            'calonSiswa'    => $calonSiswa,
+            'tanggal_cetak' => now()->format('d F Y'),
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('siswa.kartu-ujian', $data);
+        return $pdf->download('kartu-ujian-' . $calonSiswa->nisn . '.pdf');
+    }
 }
