@@ -133,7 +133,7 @@
         <div class="header">
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
-                    <td style="width: 80px; vertical-align: middle; padding: 10px;">
+                    <td style="width: 80px; vertical-align: middle; padding: 10px; border-right: 2px solid black;">
                         @php
                             $logoPath = public_path('logo_man.png');
                             $logoData = file_exists($logoPath) ? base64_encode(file_get_contents($logoPath)) : null;
