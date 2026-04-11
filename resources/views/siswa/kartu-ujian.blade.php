@@ -13,7 +13,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            
         }
         .card {
             width: 100%;
@@ -147,7 +147,7 @@
                         <h2 style="color: black;">KANTOR KEMENTERIAN AGAMA KOTA PEKANBARU</h2>
                         <h2 style="color: black;">MADRASAH ALIYAH NEGERI 4 KOTA PEKANBARU</h2>
                         <h2 style="color: black;">TERAKREDITASI A</h2>
-                        <h2 style="color: black;>JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
+                        <h2 style="color: black;">JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
                     </td>
                 </tr>
                 <tr>
