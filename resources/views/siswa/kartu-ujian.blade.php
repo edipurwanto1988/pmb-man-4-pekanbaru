@@ -25,7 +25,7 @@
             overflow: hidden;
         }
         .header {
-            background: #1e40af;
+            background: #fffff;
             color: white;
             padding: 20px;
             text-align: center;
@@ -134,14 +134,20 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                     <td style="width: 80px; vertical-align: middle; padding: 10px;">
-                        <img src="{{ public_path('logo_man.png') }}" alt="Logo MAN 4" style="width: 70px; height: auto;">
+                        @php
+                            $logoPath = public_path('logo_man.png');
+                            $logoData = file_exists($logoPath) ? base64_encode(file_get_contents($logoPath)) : null;
+                        @endphp
+                        @if($logoData)
+                            <img src="data:image/png;base64,{{ $logoData }}" alt="Logo MAN 4" style="width: 70px; height: auto;">
+                        @endif
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
                         <h1>KEMENTERIAN AGAMA REPUBLIK INDONESIA</h1>
                         <h2>KANTOR KEMENTERIAN AGAMA KOTA PEKANBARU</h2>
                         <h2>MADRASAH ALIYAH NEGERI 4 KOTA PEKANBARU</h2>
                         <h2>TERAKREDITASI A</h2>
-                        <h2>JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
+                        <h2 style="border-bottom: 2px solid black;">JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
                     </td>
                 </tr>
             </table>
