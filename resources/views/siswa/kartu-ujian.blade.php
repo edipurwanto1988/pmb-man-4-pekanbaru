@@ -26,7 +26,7 @@
         }
         .header {
             background: #fffff;
-            color: white;
+            color: #1a0b02;
             padding: 20px;
             text-align: center;
         }
@@ -120,7 +120,7 @@
         }
         .important {
             background-color: #fef3c7;
-            color: #92400e;
+            color: #1a0b02;
             padding: 10px;
             border-radius: 5px;
             font-size: 12px;
@@ -133,7 +133,7 @@
         <div class="header">
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
-                    <td style="width: 80px; vertical-align: middle; padding: 10px; border-right: 2px solid black;">
+                    <td style="width: 80px; vertical-align: middle; padding: 10px; ">
                         @php
                             $logoPath = public_path('logo_man.png');
                             $logoData = file_exists($logoPath) ? base64_encode(file_get_contents($logoPath)) : null;
@@ -143,13 +143,19 @@
                         @endif
                     </td>
                     <td style="vertical-align: middle; text-align: center;">
-                        <h1>KEMENTERIAN AGAMA REPUBLIK INDONESIA</h1>
-                        <h2>KANTOR KEMENTERIAN AGAMA KOTA PEKANBARU</h2>
-                        <h2>MADRASAH ALIYAH NEGERI 4 KOTA PEKANBARU</h2>
-                        <h2>TERAKREDITASI A</h2>
-                        <h2 style="border-bottom: 2px solid black;">JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
+                        <h1 style="color: black;">KEMENTERIAN AGAMA REPUBLIK INDONESIA</h1>
+                        <h2 style="color: black;">KANTOR KEMENTERIAN AGAMA KOTA PEKANBARU</h2>
+                        <h2 style="color: black;">MADRASAH ALIYAH NEGERI 4 KOTA PEKANBARU</h2>
+                        <h2 style="color: black;">TERAKREDITASI A</h2>
+                        <h2 style="color: black;>JL. YOS SUDARSO KM. 15 PEKANBARU</h2>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <h2 style="color: black; border-bottom: 2px solid black;"></h2>
+                    </td>
+                <tr>
+
             </table>
         </div>
 
