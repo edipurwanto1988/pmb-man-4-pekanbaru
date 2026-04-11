@@ -174,8 +174,7 @@
                     </div>
                 </a>
 
-                @if(in_array($calonSiswa->status ?? '', ['lulus_administrasi', 'lulus_tes', 'lulus_pnbm', 'daftar_ulang', 'resmi_terdaftar']))
-                <a href="{{ route('siswa.kartu-ujian') }}" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block">
+                <a href="https://pmbm.man4kotapekanbaru.my.id/siswa/kartu-ujian" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 rounded-md p-3" style="background-color:#ef4444;">
                             <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -186,7 +185,6 @@
                         </div>
                     </div>
                 </a>
-                @endif
 
                 <a href="{{ route('siswa.biodata.edit') }}" class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 hover:shadow-md transition block">
                     <div class="flex items-center">
